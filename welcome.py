@@ -49,3 +49,7 @@ def register():
 @app.route("/login_success/")
 def login_success():
     return "Login successfull"
+
+@app.route("/home/")
+def home_page():
+    return render_template('home.j2')
