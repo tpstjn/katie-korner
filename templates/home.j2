@@ -22,34 +22,27 @@
       {% endfor %}
     </div>
     <h1>Katie's Korner</h1>
+    <img src="/static/KatiesLogo.gif" />
   </header>
   <main>
-    <img src="/static/KatiesLogo.gif" />
-    <div class="container-fluid">
-    <!-- Example row of columns -->
-    <!-- PLACE HOLDER LINKS FOR NOW -->
-    <div class="row">
-        <div class="col-md-2">
-            <a href="https://www.katieskorner.com/">About Us</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="{{url_for('home_page')}}">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
+          <a class="nav-item nav-link" href="#">Order Ahead</a>
+          <a class="nav-item nav-link" href="{{url_for('login')}}">Log in</a>
+          <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
         </div>
-        <div class="col-md-2">
-            <a href="http://www.katieskorner.com/">Franchise FAQ</a>
-        </div>
-        <div class="col-md-2">
-            <a href="http://www.katieskorner.com/">Menu</a>
-        </div>
-        <div class="col-md-2">
-            <a href="http://www.katieskorner.com/">Ice Cream History</a>
-        </div>
-        <div class="col-md-2">
-            <a href="http://www.katieskorner.com/">Nutrition</a>
-        </div>
-        <div class="col-md-2">
-            <a href="http://www.katieskorner.com/">Order Ahead</a>
-        </div>
-    </div>
-    <hr>
-    </div> <!-- /container -->
+      </div>
+    </nav>
   </main>
   <footer>
     <br />
