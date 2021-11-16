@@ -1,5 +1,6 @@
 .navbar-nav a:hover {
     background-color: rgb(138, 138, 138);
+    padding-left: 1rem;
     color: black;
   }
 
@@ -11,10 +12,10 @@
     display: inline-block;
 }
 
+/* 
 .active {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
+    margin-right: 1rem;
+} */
 
 header {
     background-color: #FFDFD3;
@@ -23,11 +24,6 @@ header {
 body {
     background-image: url("/static/frontKatie.jpg");
     background-size: cover;
-}
-
-.navbar-custom {
-    text-decoration-color: black;
-    background-color: #FEC8D8;
 }
 
 footer {

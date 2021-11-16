@@ -106,12 +106,12 @@ db.create_all() # this is only needed if the database doesn't already exist
 @app.route("/")
 def index():
     # check if user is logged in 
-    if current_user.is_authenticated:
+    # if current_user.is_authenticated:
         # if yes, redirect to home page
         #TODO: once home page is built, redirect there
-        return render_template('home.html', current_user=current_user)
-    else: # if no, redirect to login
-        return redirect(url_for("login"))
+    return render_template('home.j2')
+    # else: # if no, redirect to login
+    #     return redirect(url_for("login"))
     
 @app.route("/welcome/", methods=["GET", "POST"])
 def login():
