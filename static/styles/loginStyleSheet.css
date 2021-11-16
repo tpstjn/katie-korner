@@ -3,13 +3,41 @@
     color: black;
   }
 
+#register {
+    margin:2%;
+}
+
+#register-employee {
+    margin:2%;
+}
+
+#login-meat {
+    margin-left:8%;
+    margin-right:8%;
+    padding: 3%;
+    padding-left: 2%;
+    padding-right: 2%;
+
+}
+
 #HeaderIMG {
     display: inline-block;
+}
+
+#submit {
+    padding:5px 15px; 
+    background:rgb(243, 243, 243); 
+    border:0 none;
+    cursor:pointer;
+    margin: 2%;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
 }
 
 #HeaderTitle {
     display: inline-block;
 }
+
 
 .active {
     padding-left: 1rem;
@@ -17,10 +45,12 @@
 }
 
 header {
+    text-align: left;
     background-color: #FFDFD3;
 }
 
 body {
+    text-align: center;
     background-image: url("/static/frontKatie.jpg");
     background-size: cover;
 }
