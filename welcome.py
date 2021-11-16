@@ -98,7 +98,7 @@ class Employee(UserMixin, db.Model):
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
 
-db.create_all() # this is only needed if the database doesn't already exist
+# db.create_all() # this is only needed if the database doesn't already exist
 
 ################
 # Route Handlers
