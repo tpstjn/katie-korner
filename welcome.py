@@ -45,7 +45,7 @@ db = SQLAlchemy(app)
 
 # Prepare and connect LoginManager
 app.login_manager = LoginManager()
-app.login_manager.login_view = 'get_login'
+app.login_manager.login_view = 'login'
 # Customers
 @app.login_manager.user_loader
 def load_customer(uid):
@@ -105,13 +105,17 @@ db.create_all() # this is only needed if the database doesn't already exist
 ################
 @app.route("/")
 def index():
-    # check if user is logged in 
     if current_user.is_authenticated:
-        # if yes, redirect to home page
-        #TODO: once home page is built, redirect there
-        return render_template('home.html', current_user=current_user)
-    else: # if no, redirect to login
-        return redirect(url_for("login"))
+        return render_template('home.j2', user=current_user)
+    else:
+        return render_template('home.j2')
+    # check if user is logged in 
+    # if current_user.is_authenticated:
+    #     # if yes, redirect to home page
+    #     #TODO: once home page is built, redirect there
+    #     return render_template('home.html', current_user=current_user)
+    # else: # if no, redirect to login
+    #     return redirect(url_for("login"))
     
 @app.route("/welcome/", methods=["GET", "POST"])
 def login():
@@ -199,7 +203,6 @@ def register_employee():
             return redirect(url_for('register_employee'))
 
 @app.get('/logout/')
-@login_required
 def get_logout():
     logout_user()
     flash('You have been logged out')

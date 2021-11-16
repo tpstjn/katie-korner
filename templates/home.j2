@@ -31,15 +31,20 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <div class="navbar-nav">
           {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
-          <a class="nav-item nav-link active" href="{{url_for('home_page')}}">Home</a>
+          <a class="nav-item nav-link active" href="{{url_for('index')}}">Home</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
           <a class="nav-item nav-link" href="#">Order Ahead</a>
+          {% if user %}
+          <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">Log out</a>
+          <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">{{user.email}}</a>
+          {% else %}
           <a id="JoinUs" class="nav-item nav-link" href="{{url_for('login')}}">Log in</a>
-          <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+          {% endif %}
+          {# <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a> #}
         </div>
       </div>
     </nav>
