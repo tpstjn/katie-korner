@@ -1,0 +1,24 @@
+/* .navbar-nav {
+    padding-left: 20px;
+} */
+
+#HeaderIMG {
+    display: inline-block;
+}
+
+#HeaderTitle {
+    display: inline-block;
+}
+
+.active {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+header {
+    background-color: #FFDFD3;
+}
+
+body {
+    background-image: url("/static/frontKatie.jpg");
+}
