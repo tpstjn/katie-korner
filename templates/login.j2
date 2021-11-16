@@ -8,6 +8,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/styles/loginStyleSheet.css">
 </head>
 <body>
   <header>
@@ -24,6 +25,22 @@
     <h1>Welcome to Katie's Korner!</h1>
   </header>
   <main>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <div class="navbar-nav">
+          {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
+          <a class="nav-item nav-link active" href="{{url_for('index')}}">Home</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
+          <a class="nav-item nav-link" href="#">Order Ahead</a>
+          <a id="JoinUs" class="nav-item nav-link" href="{{url_for('login')}}">Log in</a>
+          <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+        </div>
+      </div>
+    </nav>
     <form method="POST">
         {{form.hidden_tag()}}
 
