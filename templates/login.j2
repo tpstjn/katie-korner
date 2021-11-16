@@ -24,9 +24,12 @@
     </div>
     <img id="HeaderIMG" src="/static/KatiesLogo.gif" width=64px height=64px/>
     <h1 id="HeaderTitle" >Katie's Korner</h1>
-  </header>
-  <main>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-left: 1rem;">
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"
+      class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <div class="navbar-nav">
           {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
@@ -37,11 +40,14 @@
           <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
           <a class="nav-item nav-link" href="#">Order Ahead</a>
-          <a id="JoinUs" class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
-          <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a>
+          <div class="topnav-right">
+            <a class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
+          </div>
         </div>
       </div>
     </nav>
+  </header>
+  <main>
     
     <div class = "row bg-dark text-white" id="login-meat">
       <div class="col-md-6">
