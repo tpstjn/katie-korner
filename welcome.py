@@ -98,32 +98,47 @@ class Employee(UserMixin, db.Model):
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
 
-# db.create_all() # this is only needed if the database doesn't already exist
+# db.drop_all()
+db.create_all() # this is only needed if the database doesn't already exist
 
 ################
 # Route Handlers
 ################
 @app.route("/")
 def index():
-    if current_user.is_authenticated:
-        return render_template('home.j2', user=current_user)
-    else:
-        return render_template('home.j2')
-    # check if user is logged in 
-    # if current_user.is_authenticated:
-    #     # if yes, redirect to home page
-    #     #TODO: once home page is built, redirect there
-    #     return render_template('home.html', current_user=current_user)
-    # else: # if no, redirect to login
-    #     return redirect(url_for("login"))
+    # Home page displayed differently if logged in
+    # Load user id and user type (employee or customer)
+    uid = request.args.get('user')
+    user_type = request.args.get('user-type')
     
-@app.route("/welcome/", methods=["GET", "POST"])
+    # Check if query string paramaters were supplied
+    # If not, load default home page
+    if(uid is None or user_type is None):
+        return render_template('home.j2')
+
+    # Call proper load function for different types of users
+    if(user_type == "customer"):
+        user = load_customer(uid)
+    else:
+        user = load_employee(uid)
+
+    # Make sure user was loaded properly (just in case)
+    if user is None:
+        return render_template('home.j2')
+    else:
+        # flash("Running without user")
+        # flash(f"{current_user.is_active}")
+        return render_template('home.j2', user=user)
+    
+@app.route("/login/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if request.method == 'GET':
         return render_template('login.j2', form=form)
+
     if request.method == 'POST':
         if form.validate():
+
             # try to get the user associated with this email address
             # check if user is a Customer
             user = Customer.query.filter_by(email=form.email.data).first()
@@ -135,7 +150,9 @@ def login():
                 next = request.args.get('next')
                 if next is None or not next.startswith('/'):
                     next = url_for('index')
+                next = f"{next}?user={user.id}&user-type=customer"
                 return redirect(next)
+
             # check if user is an employee
             user = Employee.query.filter_by(email=form.email.data).first()
             if user is not None and user.verify_password(form.password.data):

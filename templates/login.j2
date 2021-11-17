@@ -33,16 +33,22 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <div class="navbar-nav">
           {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
-          <a class="nav-item nav-link " href="{{url_for('index')}}">Home</a>
+          <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
           <a class="nav-item nav-link" href="#">Order Ahead</a>
+          {% if user %}
+          <div class="topnav-right">
+            <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">Log out</a>
+          </div>
+          {% else %}
           <div class="topnav-right">
             <a class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
           </div>
+          {% endif %}
         </div>
       </div>
     </nav>

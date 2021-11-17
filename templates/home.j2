@@ -24,10 +24,11 @@
     </div>
     <img id="HeaderIMG" src="/static/KatiesLogo.gif" width=64px height=64px/>
     <h1 id="HeaderTitle" >Katie's Korner</h1>
-  </header>
-  <main>
-    <body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-left: 1rem;">
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"
+      class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <div class="navbar-nav">
           {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
@@ -39,20 +40,26 @@
           <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
           <a class="nav-item nav-link" href="#">Order Ahead</a>
           {% if user %}
-          <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">Log out</a>
-          <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">{{user.email}}</a>
+          <div class="topnav-right">
+            <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">Log out</a>
+          </div>
           {% else %}
-          <a id="JoinUs" class="nav-item nav-link" href="{{url_for('login')}}">Log in</a>
+          <div class="topnav-right">
+            <a class="nav-item nav-link" href="{{url_for('login')}}">Log in</a>
+          </div>
           {% endif %}
-          {# <a class="nav-item nav-link" href="{{url_for('register')}}">Register</a> #}
         </div>
       </div>
     </nav>
+  </header>
+  <main>
+    <body>
+
     <h2></h2>
+    </body>
   </main>
   <footer>
     <h2></h2>
     <br />
   </footer>
-</body>
 </html>
