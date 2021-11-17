@@ -3,20 +3,11 @@
     color: black;
   }
 
-#register {
-    margin:2%;
-}
 
-#register-employee {
-    margin:2%;
-}
-
-.email-password{
-    /* float: right; */
-    /* align-items: right; */
+.register-fields{
     display: flex;
     justify-content: flex-end;
-    margin-right: 30%;
+    margin-right: 40%;
 }
 
 #password {
@@ -27,8 +18,11 @@
     margin-left: 1%;
     margin-top: 1%
 }
-
-#login-meat {
+#confirm_password{
+    margin-left: 1%;
+    margin-top: 1%
+}
+#register-meat {
     margin-left:8%;
     margin-right:8%;
     padding: 3%;

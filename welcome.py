@@ -149,7 +149,7 @@ def login():
             # if user exists and password matches...
             if user is not None and user.verify_password(form.password.data):
                 # log this user in through the login_manager
-                login_user(user)
+                login_user(user, remember=form.rememberMe.data)
                 # redirect the user to the page they wanted or the home page
                 next = request.args.get('next')
                 if next is None or not next.startswith('/'):
@@ -161,7 +161,7 @@ def login():
             user = Employee.query.filter_by(email=form.email.data).first()
             if user is not None and user.verify_password(form.password.data):
                 # log this user in through the login_manager
-                login_user(user)
+                login_user(user, remember=form.rememberMe.data)
                 # redirect the user to the page they wanted or the home page
                 next = request.args.get('next')
                 if next is None or not next.startswith('/'):
