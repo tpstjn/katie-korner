@@ -11,6 +11,23 @@
     margin:2%;
 }
 
+.email-password{
+    /* float: right; */
+    /* align-items: right; */
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30%;
+}
+
+#password {
+    margin-left: 1%;
+    margin-top: 1%
+}
+#email {
+    margin-left: 1%;
+    margin-top: 1%
+}
+
 #login-meat {
     margin-left:8%;
     margin-right:8%;
@@ -32,6 +49,10 @@
     margin: 2%;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
+}
+
+#rememberMe {
+    margin-top: 10px;
 }
 
 #HeaderTitle {

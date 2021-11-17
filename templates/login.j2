@@ -57,12 +57,19 @@
           {{form.hidden_tag()}}
 
           <p class="display-6">Already a user?</p>
+          <div class="email-password">
           {{form.email.label}}
           {{form.email()}}
           <br />
+          </div>
+          <div class="email-password">
           <br />
           {{form.password.label}}
           {{form.password()}}
+          <br />
+          </div>
+          {{form.rememberMe()}}
+          {{form.rememberMe.label}}
           <br />
           {{form.submit()}}
           <br />
