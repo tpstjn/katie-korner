@@ -21,29 +21,25 @@
         </div>
       {% endfor %}
     </div>
-    <h1>Welcome to Katie's Korner!</h1>
   </header>
   <main>
-    <form method="POST">
-        {{form.hidden_tag()}}
-
-        <p>Already a user?</p>
-        {{form.email.label}}
-        {{form.email()}}
-        <br />
-        <br />
-        {{form.password.label}}
-        {{form.password()}}
-        <br />
-        {{form.submit()}}
-    </form>
+    {% if current_user.is_authenticated %}
+      <h1>Logged in as {{current_user.email}}</h1>
+    {% else %}
+      <h1>Not logged in</h1>
+    {% endif %}
+    {% if current_user.isEmployee %}
+      <h1>Logged in as employee</h1>
+    {% endif %}
   </main>
   <footer>
-    <br />
-    <p>New to the Korner?</p>
-    <a href="/register/"> Register </a>
-    <br />
-    <a href="/register-employee/"> Register Employee </a>
+    <br>
+    <a href="/register"> Register </a>
+    &emsp;&emsp;&emsp;&emsp;&emsp;
+    <a href="/welcome"> Login </a>
+    &emsp;&emsp;&emsp;&emsp;&emsp;
+    <a href="/logout"> Logout </a>
+    <br>
   </footer>
 </body>
 </html>

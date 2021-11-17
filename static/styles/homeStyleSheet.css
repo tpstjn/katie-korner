@@ -1,0 +1,38 @@
+.navbar-nav a:hover {
+    background-color: rgb(138, 138, 138);
+    color: black;
+  }
+
+#HeaderIMG {
+    display: inline-block;
+}
+
+#HeaderTitle {
+    display: inline-block;
+}
+
+.active {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+header {
+    background-color: #FFDFD3;
+}
+
+body {
+    background-image: url("/static/frontKatie.jpg");
+    background-size: cover;
+}
+
+.navbar-custom {
+    text-decoration-color: black;
+    background-color: #FEC8D8;
+}
+
+footer {
+    padding-bottom: 10rem;
+    background-image: url("/static/katieHomemade.png");
+    background-size: contain;
+    margin-top: 40rem;
+}
