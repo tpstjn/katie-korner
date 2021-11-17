@@ -36,8 +36,10 @@
 
 #HeaderTitle {
     display: inline-block;
+    font-family: "Brush Script MT", cursive; 
+    font-weight: 700; 
+    font-size: 500%;
 }
-
 
 .active {
     padding-left: 1rem;
