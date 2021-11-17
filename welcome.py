@@ -104,6 +104,10 @@ db.create_all() # this is only needed if the database doesn't already exist
 ################
 # Route Handlers
 ################
+
+###########
+# Home Page
+###########
 @app.route("/")
 def index():
     # Home page displayed differently if logged in
