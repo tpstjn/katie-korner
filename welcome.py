@@ -98,6 +98,14 @@ class Employee(UserMixin, db.Model):
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
 
+class IceCreamFlavors(db.Model):
+    __tablename__ = 'IceCreamFlavors'
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.Unicode, nullable=False)
+    isRegularFlavor = db.Column(db.Boolean, nullable=False)
+    isSherbet = db.Column(db.Boolean, nullable=False)
+    hasSugar = db.Column(db.Boolean, nullable=False)
+
 # db.drop_all()
 db.create_all() # this is only needed if the database doesn't already exist
 
@@ -228,3 +236,7 @@ def get_logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('index'))
+
+@app.get('/flavors/')
+def flavors():
+    return render_template("flavors.j2", flavorList=IceCreamFlavors.query.all())
