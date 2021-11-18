@@ -1,60 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/static/styles/loginStyleSheet.css">
-</head>
-<body>
-  <header id="welcome-header">
-    <div class="container">
-      {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
-          <button type="button" class="close" data-bs-dismiss="alert"> 
-            &times;
-          </button>
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-    <img id="HeaderIMG" src="/static/KatiesLogo.gif" width=64px height=64px/>
-    <h1 id="HeaderTitle" >Katies Korner</h1>
-
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-left: 1rem;">
-      <button type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"
-      class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <div class="navbar-nav">
-          {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
-          <a class="nav-item nav-link" href="{{url_for('index')}}">Home</a>
-          <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
-          <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
-          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
-          <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
-          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
-          <a class="nav-item nav-link" href="#">Order Ahead</a>
-          {% if user %}
-          <div class="topnav-right">
-            <a id="Logout" class="nav-item nav-link" href="{{url_for('get_logout')}}">Log out</a>
-          </div>
-          {% else %}
-          <div class="topnav-right">
-            <a class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </nav>
-  </header>
-  <main>
-    
+{% extends "base.j2" %}
+{% block title %}Login{% endblock %}
+{% block active_login %}active{% endblock %}}
+{% block main %}
     <div class = "row bg-dark text-white" id="login-meat">
       <div class="col-md-6">
 
@@ -89,10 +36,4 @@
         <a href="/register-employee/" class="btn btn-light" id="register-employee"> Register Employee </a>
       </div>
     </div>
-
-  </main>
-  <footer>
-
-  </footer>
-</body>
-</html>
+{% endblock %}
