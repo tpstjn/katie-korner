@@ -3,6 +3,10 @@
     color: black;
   }
 
+#flavors{
+    display: flex;
+}
+
 #register {
     margin:2%;
 }
