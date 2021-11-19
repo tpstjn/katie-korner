@@ -1,0 +1,51 @@
+{% extends "base.j2" %}
+{% block title %}Login{% endblock %}
+{% block active_flavors %}active{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row bg-dark text-white" id="flavors">
+            <div class="col-md-3">
+                <table>
+                    <tr>
+                        <th>Regular Flavors</th>
+                    </tr>
+                    {% for flavor in flavorList %}
+                    {% if flavor.isRegularFlavor %}
+                    <tr>
+                        <td>{{flavor.flavor}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <tr>
+                        <th>Sherbet</th>
+                    </tr>
+                    {% for flavor in flavorList %}
+                    {% if flavor.isSherbet %}
+                    <tr>
+                        <td>{{flavor.flavor}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <tr>
+                        <th>Sugar Free</th>
+                    </tr>
+                    {% for flavor in flavorList %}
+                    {% if not flavor.hasSugar %}
+                    <tr>
+                        <td>{{flavor.flavor}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
