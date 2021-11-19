@@ -8,6 +8,7 @@
 #########
 import os, sys
 from flask import Flask, render_template, url_for, redirect, request, flash
+from flask_login.utils import fresh_login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_required
 from flask_login import login_user, logout_user, current_user
@@ -17,6 +18,8 @@ sys.path.append(script_dir)
 
 from security.hashing import UpdatedHasher
 from forms.login_forms import LoginForm, RegisterForm
+
+from enum import Enum
 
 #####################
 # Basic Configuration
@@ -54,12 +57,19 @@ def load_user(uid):
 ##########
 # Database
 ##########
+class UserRole(Enum):
+    Customer = 1
+    Employee = 2
+    Admin = 3
+    def __str__(self):
+        return self.name
+
 class User(UserMixin, db.Model):
     __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.Unicode, nullable=False)
     password_hash = db.Column(db.LargeBinary)
-    user_role = db.Column(db.Unicode, nullable=False) # differentiate between different types of users
+    user_role = db.Column(db.Integer, nullable=False) # differentiate between different types of users
 
     # make a write-only password property that just updates the stored hash
     @property
@@ -72,7 +82,6 @@ class User(UserMixin, db.Model):
     # add a verify_password convenience method
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
-
 class IceCreamFlavors(db.Model):
     __tablename__ = 'IceCreamFlavors'
     id = db.Column(db.Integer, primary_key=True)
@@ -173,7 +182,7 @@ def register():
             user = User.query.filter_by(email=form.email.data).first()
             # if the email address is free, create a new user and send to login
             if user is None:
-                user = User(email=form.email.data, password=form.password.data, user_role="Customer")
+                user = User(email=form.email.data, password=form.password.data, user_role=UserRole.Customer.value)
                 db.session.add(user)
                 db.session.commit()
                 return redirect(url_for('login'))
@@ -200,7 +209,7 @@ def register_employee():
             user = User.query.filter_by(email=form.email.data).first()
             # if the email address is free, create a new user and send to login
             if user is None:
-                user = User(email=form.email.data, password=form.password.data, user_role="Employee")
+                user = User(email=form.email.data, password=form.password.data, user_role=UserRole.Employee.value)
                 db.session.add(user)
                 db.session.commit()
                 return redirect(url_for('login'))
@@ -227,9 +236,12 @@ def get_logout():
 #########
 @app.get('/flavors/')
 def flavors():
-    # flavorList = IceCreamFlavors.query.all()
-    # flavorMessage = ""
-    # for flavor in flavorList:
-    #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
-    # flash(flavorMessage)
     return render_template("flavors.j2", flavorList=IceCreamFlavors.query.all())
+
+##################
+# Admin Management
+##################
+@app.route('/manage/')
+@fresh_login_required
+def manage():
+    return render_template("manage.j2", user=current_user)
