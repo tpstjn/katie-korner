@@ -123,7 +123,7 @@ db.create_all() # this is only needed if the database doesn't already exist
 def index():
     # Make sure user was loaded properly (just in case)
     if current_user.is_authenticated:
-        return render_template('home.j2', user=current_user)
+        return render_template('home.j2', current_user=current_user)
     else:
         return render_template('home.j2')
 
@@ -232,4 +232,7 @@ def flavors():
     # for flavor in flavorList:
     #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
     # flash(flavorMessage)
-    return render_template("flavors.j2", flavorList=IceCreamFlavors.query.all())
+    if current_user.is_authenticated:
+        return render_template('flavors.j2', current_user=current_user, flavorList=IceCreamFlavors.query.all())
+    else:
+        return render_template('flavors.j2', flavorList=IceCreamFlavors.query.all())

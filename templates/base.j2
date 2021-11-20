@@ -39,7 +39,7 @@
           <a class="nav-item nav-link {% block active_history %}{% endblock %}" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
           <a class="nav-item nav-link {% block active_nutrition %}{% endblock %}" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
           <a class="nav-item nav-link {% block active_order %}{% endblock %}" href="#">Order Ahead</a>
-          {% if user %}
+          {% if current_user %}
           <div class="topnav-right">
             <a id="Logout" class="nav-item nav-link {% block active_logout %}{% endblock %}" href="{{url_for('get_logout')}}">Log out</a>
           </div>
