@@ -1,6 +1,5 @@
 #############################
 # Welcome to Katie's Korner!
-# Includes login and register
 #############################
 
 # region Import/Basic Init
@@ -232,11 +231,11 @@ class IceCreamFlavors(db.Model):
 
 # region ForDebug
 
-db.drop_all()
+# db.drop_all()
 db.create_all()  # this is only needed if the database doesn't already exist
 
-Role.insert_roles()
-IceCreamFlavors.insert_flavors()
+# Role.insert_roles()
+# IceCreamFlavors.insert_flavors()
 
 # endregion
 
@@ -286,11 +285,11 @@ def login():
                     next = url_for('index')
                 return redirect(next)
             else:
-                flash("Wrong username or password")
+                flash("Wrong username or password", 'error')
                 return redirect(url_for('login'))
         else:
             for field, error in form.errors.items():
-                flash(f"{field}: {error}")
+                flash(f"{field}: {error}", 'error')
             return redirect(url_for('login'))
 
 # endregion
@@ -317,14 +316,15 @@ def register():
                             password=form.password.data)
                 db.session.add(user)
                 db.session.commit()
+                flash('Account created successfully', 'success')
                 return redirect(url_for('login'))
             else:  # if user already exists
                 # flash warning message and redirect
-                flash('There is already an account with that email address')
+                flash('There is already an account with that email address', 'error')
                 return redirect(url_for('register'))
         else:
             for field, error in form.errors.items():
-                flash(f"{field}: {error}")
+                flash(f"{field}: {error}", 'error')
             return redirect(url_for('register'))
 
 # endregion
@@ -351,14 +351,15 @@ def register_employee():
                             password=form.password.data)
                 db.session.add(user)
                 db.session.commit()
+                flash('Account created successfully', 'success')
                 return redirect(url_for('login'))
             else:  # if user already exists
                 # flash warning message and redirect
-                flash('There is already an account with that email address')
+                flash('There is already an account with that email address', 'error')
                 return redirect(url_for('register_employee'))
         else:
             for field, error in form.errors.items():
-                flash(f"{field}: {error}")
+                flash(f"{field}: {error}", 'error')
             return redirect(url_for('register_employee'))
 
 # endregion
@@ -371,7 +372,7 @@ def register_employee():
 @app.get('/logout/')
 def get_logout():
     logout_user()
-    flash('You have been logged out')
+    flash('You have been logged out', 'logout')
     return redirect(url_for('index'))
 
 # endregion
