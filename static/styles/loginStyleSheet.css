@@ -44,6 +44,7 @@
 
 #HeaderIMG {
     display: inline-block;
+    vertical-align:text-bottom;
 }
 
 #submit {
@@ -78,7 +79,7 @@ header {
 }
 
 body {
-    text-align: center;
+    /* text-align: center; */
     background-image: url("/static/frontKatie.jpg");
     background-size: cover;
 }

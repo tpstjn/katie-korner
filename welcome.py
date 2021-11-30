@@ -7,7 +7,8 @@
 #########
 # Imports
 #########
-from forms.login_forms import LoginForm, RegisterForm
+import enum
+from forms.login_forms import LoginForm, RegisterForm, RegisterEmployeeForm
 from security.hashing import UpdatedHasher
 import os
 import sys
@@ -16,6 +17,7 @@ from flask_login.utils import fresh_login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, AnonymousUserMixin, login_manager, login_required
 from flask_login import login_user, logout_user, current_user
+from enum import Flag, auto
 
 script_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(script_dir)
@@ -63,6 +65,13 @@ def load_user(uid):
 # endregion
 
 # region Database
+
+class Employee_Role(Flag):
+    Cashier = auto()
+    Kitchen = auto()
+    Cleaner = auto()
+    Manager = auto()
+    Boss = auto()
 
 ##########
 # Database
@@ -227,6 +236,19 @@ class IceCreamFlavors(db.Model):
         db.session.commit()
 # endregion
 
+# region Employees
+
+class Employee(db.Model):
+    __tablename__ = 'Employees'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.Unicode, nullable=False)
+    first_name = db.Column(db.Unicode, nullable=False)
+    last_name = db.Column(db.Unicode, nullable=False)
+    # differentiate between different types of employees
+    employee_role = db.Column(db.Integer)
+
+# endregion 
+
 # endregion
 
 # region ForDebug
@@ -329,41 +351,6 @@ def register():
 
 # endregion
 
-# region Register Employee
-
-###################
-# Register Employee
-###################
-
-
-@app.route("/register-employee/", methods=["GET", "POST"])
-def register_employee():
-    form = RegisterForm()
-    if request.method == 'GET':
-        return render_template('register.j2', form=form)
-    if request.method == 'POST':
-        if form.validate():
-            # Check if email & pwd are in DB
-            user = User.query.filter_by(email=form.email.data).first()
-            # if the email address is free, create a new user and send to login
-            if user is None:
-                user = User(email=form.email.data,
-                            password=form.password.data)
-                db.session.add(user)
-                db.session.commit()
-                flash('Account created successfully', 'success')
-                return redirect(url_for('login'))
-            else:  # if user already exists
-                # flash warning message and redirect
-                flash('There is already an account with that email address', 'error')
-                return redirect(url_for('register_employee'))
-        else:
-            for field, error in form.errors.items():
-                flash(f"{field}: {error}", 'error')
-            return redirect(url_for('register_employee'))
-
-# endregion
-
 # region Logout
 
 ########
@@ -372,7 +359,7 @@ def register_employee():
 @app.get('/logout/')
 def get_logout():
     logout_user()
-    flash('You have been logged out', 'logout')
+    flash('You have been logged out', 'no-background-success')
     return redirect(url_for('index'))
 
 # endregion
@@ -393,10 +380,51 @@ def flavors():
 ##################
 # Admin Management
 ##################
-@app.route('/manage/')
+@app.route('/manage/', methods=['GET', 'POST'])
 @fresh_login_required
 def manage():
-    return render_template("manage.j2", user=current_user)
+    form = RegisterEmployeeForm()
+    roles = [Employee_Role.Cashier, Employee_Role.Kitchen, Employee_Role.Cleaner, Employee_Role.Manager, Employee_Role.Boss]
+    # flash(f"{roles}")
+    for role in roles:
+        flash(f"{role.name}")
+    form.role.choices = [(role.value, role.name) 
+                                for role in roles]
+
+    # if request.method == 'GET':
+    #     return render_template('register_employee.j2', form=form, user=current_user)
+
+    if request.method == 'POST':
+        if form.validate():
+            # Check if email & pwd are in DB
+            user = User.query.filter_by(email=form.email.data).first()
+            # if the email address is free, create a new user and send to login
+            if user is None:
+                #Add employee to Users Table
+                user = User(email=form.email.data,
+                            password=form.password.data)
+                db.session.add(user)
+                db.session.commit()
+                
+                #Add employee to Employees Table
+                employee = Employee(email=form.email.data,
+                                    first_name=form.firstName.data,
+                                    last_name=form.lastName.data,
+                                    employee_role=form.role.data)
+                db.session.add(employee)
+                db.session.commit()
+
+                flash('Account created successfully', 'no-background-success')
+                return redirect(url_for('manage'))
+            else:  # if user already exists
+                # flash warning message and redirect
+                flash('There is already an account with that email address', 'no-background-warning')
+                # return redirect(url_for('register_employee'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}", 'error-employee')
+            # return redirect(url_for('register_employee'))
+    return render_template("manage.j2", user=current_user, form=form)
 
 # endregion
 

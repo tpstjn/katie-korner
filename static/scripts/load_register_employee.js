@@ -1,13 +1,8 @@
-window.addEventListener("DOMContentLoaded", function() {
-    const registerButton = document.getElementById("register-employee");
-    registerButton.addEventListener("click", loadForm);
-});
+// window.addEventListener("DOMContentLoaded", function() {
+//     const registerButton = document.getElementById("btnSubmit");
+//     registerButton.addEventListener("click", submitForm);
+// });
 
-async function fetchHtmlAsText(url) {
-    return await (await fetch(url)).text();
-}
-
-async function loadForm() {
-    const contentDiv = document.getElementById("main");
-    contentDiv.innerHTML = await fetchHtmlAsText("register.j2");
-}
+// function submitForm() {
+//     window.location.href = "/register-employee/";
+// }
