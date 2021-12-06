@@ -73,8 +73,44 @@ class User(UserMixin, db.Model):
     def verify_password(self, pwd):
         return pwd_hasher.check(pwd, self.password_hash)
 
+class IceCreamFlavors(db.Model):
+    __tablename__ = 'IceCreamFlavors'
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.Unicode, nullable=False)
+    isRegularFlavor = db.Column(db.Boolean, nullable=False)
+    isSherbet = db.Column(db.Boolean, nullable=False)
+    hasSugar = db.Column(db.Boolean, nullable=False)
+
 # db.drop_all()
 db.create_all() # this is only needed if the database doesn't already exist
+
+# banana = IceCreamFlavors(flavor="Banana", isRegularFlavor=True, isSherbet=False, hasSugar=True)
+# blackCherry = IceCreamFlavors(flavor="Black Cherry", isRegularFlavor=True, isSherbet=False, hasSugar=True)
+# cottonCandy = IceCreamFlavors(flavor="Cotton Candy", isRegularFlavor=True, isSherbet=False, hasSugar=True)
+# bubbleGum = IceCreamFlavors(flavor="Bubble Gum", isRegularFlavor=True, isSherbet=False, hasSugar=True)
+# chocolate = IceCreamFlavors(flavor="Chocolate", isRegularFlavor=True, isSherbet=False, hasSugar=True)
+
+# blueBoy = IceCreamFlavors(flavor="Blue Boy", isRegularFlavor=False, isSherbet=True, hasSugar=True)
+# orange = IceCreamFlavors(flavor="Orange", isRegularFlavor=False, isSherbet=True, hasSugar=True)
+# redRasp = IceCreamFlavors(flavor="Red Raspberry", isRegularFlavor=False, isSherbet=True, hasSugar=True)
+
+# butterPecan = IceCreamFlavors(flavor="Cutter Pecan", isRegularFlavor=False, isSherbet=False, hasSugar=False)
+# ripple = IceCreamFlavors(flavor="Fudge Ripple", isRegularFlavor=False, isSherbet=False, hasSugar=False)
+# vanilla = IceCreamFlavors(flavor="Vanilla", isRegularFlavor=False, isSherbet=False, hasSugar=False)
+
+# db.session.add(banana)
+# db.session.add(blackCherry)
+# db.session.add(cottonCandy)
+# db.session.add(bubbleGum)
+# db.session.add(chocolate)
+# db.session.add(blueBoy)
+# db.session.add(orange)
+# db.session.add(redRasp)
+# db.session.add(butterPecan)
+# db.session.add(ripple)
+# db.session.add(vanilla)
+
+# db.session.commit()
 
 ################
 # Route Handlers
@@ -185,3 +221,15 @@ def get_logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('index'))
+
+#########
+# Flavors
+#########
+@app.get('/flavors/')
+def flavors():
+    # flavorList = IceCreamFlavors.query.all()
+    # flavorMessage = ""
+    # for flavor in flavorList:
+    #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
+    # flash(flavorMessage)
+    return render_template("flavors.j2", flavorList=IceCreamFlavors.query.all())
