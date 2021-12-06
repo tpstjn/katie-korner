@@ -9,6 +9,7 @@
 #########
 import enum
 from forms.login_forms import LoginForm, RegisterForm, RegisterEmployeeForm
+from forms.rateflavor_forms import RateFlavorForm
 from security.hashing import UpdatedHasher
 import os
 import sys
@@ -251,6 +252,16 @@ class Employee(db.Model):
 
 # endregion
 
+# regrion FlavorRating
+
+class FlavorRating(db.Model):
+    __tablename__ = 'FlavorRatings'
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.Unicode, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.Unicode, nullable=True)
+    user = db.Column(db.Unicode, nullable=False)
+
 # region ForDebug
 
 # db.drop_all()
@@ -429,3 +440,33 @@ def manage():
 # endregion
 
 # endregion
+
+# region RateFlavors
+
+##################
+# Rate Our Flavors
+##################
+
+@app.route('/rateflavor/', methods=['GET', 'POST'])
+def rateflavor():
+    form = RateFlavorForm()
+    if request.method == 'POST':
+        if form.validate():
+            # TODO: Find a way to add a new flavor rating smoothly
+            #       Maybe make a new rate flavor page and rate from there?
+            #       Needs to add existing flavor to database without having the
+            #       user explicitly input it
+            #
+
+            #newRating = FlavorRating(rating=form.rating.data, comment=form.comment.data)
+            #db.session.add(newRating)
+            #db.session.commit()
+            flash('Flavor rated successfully', 'no-background-success')
+            return redirect(url_for('rateourflavors'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}", 'error-rateflavor')
+            # return redirect(url_for('register_employee'))
+    flavorList = IceCreamFlavors.query.all()
+    existingRankings = FlavorRating.query.all()
+    return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings)

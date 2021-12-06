@@ -1,0 +1,37 @@
+{% extends "base.j2" %}
+{% block addToHeader %} <script src="scripts/rateourflavors.js"></script> {% endblock %}
+{% block title %}RateOurFlavors{% endblock %}
+{% block active_flavor %}active{% endblock %}
+{% block main %}
+    <h1>Flavors</h1>
+    <div class="container-fluid">
+        <!-- Example row of columns -->
+        <div class="row">
+        {% for flavor in flavors %}
+          <div class="col-md-1">
+            <h5>{{flavor.flavor}}</h5>
+            {% if flavor.isSherbet %}
+                <p>Sherbet</p>
+            {% endif %}
+            {% if flavor.hasSugar %}
+                <p>Sugar Free!</p>
+            {% endif %}
+            <p></p>
+            <input type="button" name="{{flavor.flavor}}" value="Ratings">
+          </div>
+        {% endfor %}
+        </div>
+    </div> <!-- /container -->
+    <form method="POST">
+        {{form.hidden_tag()}}
+        <br />
+        {{form.rating.label}}
+        {{form.rating()}}
+        <br />
+        {{form.comment.label}}
+        {{form.comment()}}
+        <br />
+        {{form.submit()}}
+        <br />
+    </form>
+{% endblock %}
