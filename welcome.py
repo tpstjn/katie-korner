@@ -17,6 +17,7 @@ sys.path.append(script_dir)
 
 from security.hashing import UpdatedHasher
 from forms.login_forms import LoginForm, RegisterForm
+from forms.order_forms import SchedulePickupForm
 
 #####################
 # Basic Configuration
@@ -80,6 +81,15 @@ class IceCreamFlavors(db.Model):
     isRegularFlavor = db.Column(db.Boolean, nullable=False)
     isSherbet = db.Column(db.Boolean, nullable=False)
     hasSugar = db.Column(db.Boolean, nullable=False)
+
+# class Calendar(db.Model):
+#     __tablename__ = 'Calendar'
+#     day = db.Column(db.Unicode, nullable=False)
+#     hour = db.Column(db.Integer, nullable=False)
+#     minutes = db.Column(db.Integer, nullable=False)
+#     AMorPM = db.Column(db.Unicode, nullable=False)
+
+    
 
 # db.drop_all()
 db.create_all() # this is only needed if the database doesn't already exist
@@ -233,3 +243,31 @@ def flavors():
     #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
     # flash(flavorMessage)
     return render_template("flavors.j2", flavorList=IceCreamFlavors.query.all())
+
+
+#############
+# Order Ahead
+#############
+@app.route('/order/schedule/', methods=['GET', 'POST'])
+def order_schedule():
+    form = SchedulePickupForm()
+    if request.method == 'GET':
+        return render_template("order_schedule.j2", form=form)
+    elif request.method == 'POST':
+        if form.validate():
+            if form.goBackBut.data:
+                return redirect(url_for('index'))
+            elif form.continueBut.data:
+                return redirect(url_for('order_menu'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}")
+            return redirect(url_for('order_schedule'))
+
+
+@app.route('/order/menu/')
+def order_menu():
+    #TODO some validation to make sure they've entered in valid data for pickup, and not just routing themselves to the menu
+    return "heeho"
+
+
