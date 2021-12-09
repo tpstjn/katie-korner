@@ -2,12 +2,51 @@
 {% block title %}Manage{% endblock %}
 {% block active_manage %}active{% endblock %}
 {% block main %}
+
+<div class="table-responsive">
+  <table class="table table-hover">
+  <caption>Employees</caption>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Role</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if employees %}
+        {% for employee in employees %}
+          <tr>
+            <td class="id clickable" data-id="{{employee.id}}" data-toggle="modal" data-target="#modalEditEmployee">{{employee.id}}</td>
+            <td class="email clickable" data-id="{{employee.id}}" data-toggle="modal" data-target="#modalEditEmployee">{{employee.email}}</td>
+            <td class="fname clickable" data-id="{{employee.id}}" data-toggle="modal" data-target="#modalEditEmployee">{{employee.first_name}}</td>
+            <td class="lname clickable" data-id="{{employee.id}}" data-toggle="modal" data-target="#modalEditEmployee">{{employee.last_name}}</td>
+            {% for role in roles%}
+              {% if role.value == employee.employee_role %}
+                <td class="role clickable" data-id="{{employee.id}}" data-toggle="modal" data-target="#modalEditEmployee">{{role.name}}</td>
+              {% endif %}
+            {% endfor %}
+            <td>
+              <button data-toggle="modal" data-target="#modalRemoveEmployee" class="btn btn-primary btnRemoveUser">Remove</button>
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <td colspan="5">No employee data recorded</td>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
 <!-- Button trigger modal -->
-<button type="button" class="btn" data-toggle="modal" data-target="#modalRegisterEmployee">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegisterEmployee">
   Register Employee
 </button>
 
-<!-- Modal -->
-
+<!-- Modals -->
 {% include "/modal_register_employee.j2" %}
+{% include "/modal_remove_employee.j2" %}
+{% include "/modal_edit_employee.j2" %}
 {% endblock %}

@@ -3,6 +3,10 @@
     color: black;
   }
 
+.clickable {
+    cursor: pointer;
+}
+
 #flavors{
     display: flex;
 }
@@ -80,7 +84,7 @@ header {
 
 body {
     /* text-align: center; */
-    background-image: url("/static/frontKatie.jpg");
+    /* background-image: url("/static/frontKatie.jpg"); */
     background-size: cover;
 }
 
@@ -91,7 +95,7 @@ body {
 
 footer {
     padding-bottom: 10rem;
-    background-image: url("/static/katieHomemade.png");
+    /* background-image: url("/static/katieHomemade.png"); */
     background-size: contain;
     margin-top: 40rem;
 }

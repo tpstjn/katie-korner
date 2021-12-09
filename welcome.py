@@ -8,7 +8,9 @@
 # Imports
 #########
 import enum
-from forms.login_forms import LoginForm, RegisterForm, RegisterEmployeeForm
+
+from sqlalchemy.orm import session
+from forms.login_forms import EditEmployeeForm, LoginForm, RegisterForm, RegisterEmployeeForm
 from security.hashing import UpdatedHasher
 import os
 import sys
@@ -383,48 +385,63 @@ def flavors():
 @app.route('/manage/', methods=['GET', 'POST'])
 @fresh_login_required
 def manage():
-    form = RegisterEmployeeForm()
+    registerForm = RegisterEmployeeForm()
+    editForm = EditEmployeeForm()
     roles = [Employee_Role.Cashier, Employee_Role.Kitchen, Employee_Role.Cleaner, Employee_Role.Manager, Employee_Role.Boss]
-    # flash(f"{roles}")
-    for role in roles:
-        flash(f"{role.name}")
-    form.role.choices = [(role.value, role.name) 
+    registerForm.role.choices = [(role.value, role.name) 
                                 for role in roles]
-
-    # if request.method == 'GET':
-    #     return render_template('register_employee.j2', form=form, user=current_user)
+    editForm.role.choices = registerForm.role.choices
 
     if request.method == 'POST':
-        if form.validate():
-            # Check if email & pwd are in DB
-            user = User.query.filter_by(email=form.email.data).first()
-            # if the email address is free, create a new user and send to login
-            if user is None:
-                #Add employee to Users Table
-                user = User(email=form.email.data,
-                            password=form.password.data)
-                db.session.add(user)
-                db.session.commit()
-                
-                #Add employee to Employees Table
-                employee = Employee(email=form.email.data,
-                                    first_name=form.firstName.data,
-                                    last_name=form.lastName.data,
-                                    employee_role=form.role.data)
-                db.session.add(employee)
-                db.session.commit()
+        # Edit employee attributes
+        if editForm.submitEdit.data:
+            id = request.args.get('id')
+            db.session.query(Employee).\
+                filter(Employee.id == id).\
+                update({"employee_role": (editForm.role.data)})
+            db.session.commit()
+            return redirect(url_for('manage'))
+        # Add new employee
+        if registerForm.submitRegister.data:
+            if registerForm.validate():
+                # Check if email & pwd are in DB
+                user = User.query.filter_by(email=registerForm.email.data).first()
+                # if the email address is free, create a new user and send to login
+                if user is None:
+                    #Add employee to Users Table
+                    user = User(email=registerForm.email.data,
+                                password=registerForm.password.data)
+                    db.session.add(user)
+                    db.session.commit()
+                    
+                    #Add employee to Employees Table
+                    employee = Employee(email=registerForm.email.data,
+                                        first_name=registerForm.firstName.data,
+                                        last_name=registerForm.lastName.data,
+                                        employee_role=registerForm.role.data)
+                    db.session.add(employee)
+                    db.session.commit()
 
-                flash('Account created successfully', 'no-background-success')
-                return redirect(url_for('manage'))
-            else:  # if user already exists
-                # flash warning message and redirect
-                flash('There is already an account with that email address', 'no-background-warning')
-                # return redirect(url_for('register_employee'))
-        else:
-            for field, error in form.errors.items():
-                flash(f"{field}: {error}", 'error-employee')
-            # return redirect(url_for('register_employee'))
-    return render_template("manage.j2", user=current_user, form=form)
+                    flash('Account created successfully', 'no-background-success')
+                    return redirect(url_for('manage'))
+                else:  # if user already exists
+                    # flash warning message and redirect
+                    flash('There is already an account with that email address', 'no-background-warning')
+                    return redirect(url_for('manage'))
+            else:
+                for field, error in registerForm.errors.items():
+                    flash(f"{field}: {error}", 'error-employee')
+
+    employees = Employee.query.all()
+    return render_template("manage.j2", user=current_user, registerForm=registerForm, editForm=editForm, 
+                            employees=employees, roles=roles)
+
+@app.route('/removeEmployee/<int:id>/', methods=['GET', 'DELETE'])
+def removeEmployee(id):
+    # Remove employee from database
+    Employee.query.filter_by(id=id).delete()
+    db.session.commit()
+    return(redirect(url_for('manage')))
 
 # endregion
 
