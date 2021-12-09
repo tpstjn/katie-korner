@@ -24,6 +24,9 @@ from enum import Flag, auto
 script_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(script_dir)
 
+from security.hashing import UpdatedHasher
+from forms.login_forms import LoginForm, RegisterForm
+from forms.order_forms import SchedulePickupForm
 # endregion
 
 # region Basic Config
@@ -206,7 +209,7 @@ class IceCreamFlavors(db.Model):
     isRegularFlavor = db.Column(db.Boolean, nullable=False)
     isSherbet = db.Column(db.Boolean, nullable=False)
     hasSugar = db.Column(db.Boolean, nullable=False)
-
+    
     @staticmethod
     def insert_flavors():
         flavors = (
@@ -372,8 +375,39 @@ def get_logout():
 #########
 @app.get('/flavors/')
 def flavors():
+    # flavorList = IceCreamFlavors.query.all()
+    # flavorMessage = ""
+    # for flavor in flavorList:
+    #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
+    # flash(flavorMessage)
     return render_template('flavors.j2', user=current_user, flavorList=IceCreamFlavors.query.all())
 
+
+#############
+# Order Ahead
+#############
+@app.route('/order/schedule/', methods=['GET', 'POST'])
+def order_schedule():
+    form = SchedulePickupForm()
+    if request.method == 'GET':
+        return render_template("order_schedule.j2", form=form)
+    elif request.method == 'POST':
+        if form.validate():
+            if form.goBackBut.data:
+                return redirect(url_for('index'))
+            elif form.continueBut.data:
+                return redirect(url_for('order_menu'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}")
+            return redirect(url_for('order_schedule'))
+
+
+@app.route('/order/menu/')
+def order_menu():
+    #TODO some validation to make sure they've entered in valid data for pickup, and not just routing themselves to the menu
+    return "heeho"
+    
 # endregion
 
 # region Admin

@@ -33,6 +33,23 @@
                   {% endif %}
                 </div>
 
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-left: 1rem;">
+      <button type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"
+      class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <div class="navbar-nav">
+          {# <a class="navbar-brand active" href="{{url_for('home_page')}}">Home</a> #}
+          <a class="nav-item nav-link " href="{{url_for('index')}}">Home</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/history.html">About Us</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/MostPopFlv.html">Most Popular Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/Flavors.html">All Flavors</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/IceCreamHistory.html">Ice Cream History</a>
+          <a class="nav-item nav-link" href="https://www.katieskorner.com/Info/NutritionGuide.html">Nutrition</a>
+          <a class="nav-item nav-link" href="{{url_for('order_schedule')}}">Order Ahead</a>
+          <div class="topnav-right">
+            <a class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
                 <div>
                   {{ form.confirm_password.label(class="form-control-label") }}
                   {{form.confirm_password(class="form-control" + (" is-invalid" if form.password.errors else ""))}}

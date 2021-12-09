@@ -1,0 +1,42 @@
+{% extends "base.j2" %}
+{% block title %}Schedule{% endblock %}
+{% block main %}
+<link rel="stylesheet" href="/static/styles/orderscheduleStyleSheet.css">
+<script src="/static/scripts/order_ahead.js"></script>
+    <div class = "row bg-dark text-white" id="order-schedule-meat">
+      <div class="col-md-12">
+
+      <form method="POST" id="order-schedule-form">
+
+          {{form.hidden_tag()}}
+
+          <p class="display-6">Schedule Pickup</p>
+          <div class="order-schedule-info">
+              {{form.location.label}}
+              {{form.location()}}
+            <br />
+          </div>
+          <div class="order-schedule-info">
+            <br />
+              {{form.pickup.label}}
+              {{form.pickup()}}
+            <br />
+          </div>
+          <div class="order-schedule-info">
+            <br />
+                <input type="radio" id="ASAP-button" name="pickup-time" value="ASAP" onclick="hideCalendar();">
+                <label for="ASAP-button">ASAP || </label>
+                <input type="radio" id="later-button" name="pickup-time" value="Later" onclick="displayCalendar();">
+                <label for="later-button">Later</label>
+            <div id="calendar" style="display:none">
+              {{form.dayPicker()}} {{form.timePicker()}}
+            </div>
+          </div> 
+          <div class="order-schedule-info">
+            <br />
+              {{form.goBackBut()}} {{form.continueBut()}}
+            <br />
+      </form>
+      </div>
+    </div>
+{% endblock %}
