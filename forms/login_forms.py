@@ -39,9 +39,12 @@ class RegisterEmployeeForm(FlaskForm):
     submitRegister = SubmitField("Register")
 
 class LoginForm(FlaskForm):
-    email = EmailField("Email: ", validators=[InputRequired(), Email()])
+    email = EmailField("Email: ", 
+        validators=[InputRequired(message="Required"), 
+        Email(message="Must be a valid email address")])
     password = PasswordField("Password: ", 
-        validators=[InputRequired(), Length(min=8, max=256)])
+        validators=[InputRequired(message="Required"), 
+        Length(min=8, max=256)])
     rememberMe = BooleanField("Remember me")
     submit = SubmitField("Login")
 

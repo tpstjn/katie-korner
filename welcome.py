@@ -286,7 +286,6 @@ def index():
 # Login
 #######
 
-
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -329,7 +328,7 @@ def login():
 def register():
     form = RegisterForm()
     if request.method == 'GET':
-        return render_template('register.j2', form=form)
+        return render_template('register.j2', form=form, user=current_user)
     if request.method == 'POST':
         if form.validate():
             # Check if email & pwd are in DB
