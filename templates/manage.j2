@@ -1,0 +1,13 @@
+{% extends "base.j2" %}
+{% block title %}Manage{% endblock %}
+{% block active_manage %}active{% endblock %}
+{% block main %}
+<!-- Button trigger modal -->
+<button type="button" class="btn" data-toggle="modal" data-target="#modalRegisterEmployee">
+  Register Employee
+</button>
+
+<!-- Modal -->
+
+{% include "/modal_register_employee.j2" %}
+{% endblock %}
