@@ -55,9 +55,70 @@
     align-items: center;
 }
 
+/* Header */
+
 #HeaderIMG {
+    padding:3%;
+    width:6rem;
+    height:6rem;
+}
+
+#HeaderIMGContainer {
     display: inline-block;
-    vertical-align:text-bottom;
+    vertical-align: text-bottom;
+}
+
+#HeaderTitle {
+    display: inline-block;
+    font-family: "Brush Script MT", cursive; 
+    color: #ef0e28;
+    font-weight: 700; 
+    font-size: 500%;
+}
+
+#HeaderTextContainer {
+    margin-left:0;
+    text-align: left;
+}
+
+#HeaderSubtitle {
+    display: inline-block;
+    font-family: "Brush Script MT", cursive;
+    color: #14176d;
+    font-weight: 700; 
+    font-size: 300%;
+}
+
+/* Home Img Ribbon */
+#img-ribbon-home {
+    display:inline-block;
+    text-align:center;
+    vertical-align: top;
+}
+
+#img-ribbon-1 {
+    /* height:auto; */
+    width:24%;
+    margin:0%;
+
+}
+
+#img-ribbon-2 {
+    width:24%;
+    padding:0%;
+
+
+}
+
+#img-ribbon-3 {
+    width:24%;
+}
+
+#img-ribbon-4 {
+    /* height:20rem; */
+    width:24%;
+
+
 }
 
 #submit {
@@ -74,22 +135,6 @@
     margin-top: 10px;
 }
 
-#HeaderTitle {
-    display: inline-block;
-    font-family: "Brush Script MT", cursive; 
-    color: #ef0e28;
-    font-weight: 700; 
-    font-size: 500%;
-}
-
-#HeaderSubtitle {
-    display: inline-block;
-    font-family: "Brush Script MT", cursive;
-    color: #14176d;
-    font-weight: 700; 
-    font-size: 300%;
-}
-
 .active {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -102,8 +147,8 @@ header {
 
 body {
     /* text-align: center; */
-    /* background-image: url("/static/frontKatie.jpg"); */
-    background-size: cover;
+    background-image: url("/static/icecream-background-2.png");
+    background-size: contain;
 }
 
 .navbar-custom {
