@@ -5,12 +5,12 @@
       }
       
       /* Optional: Makes the sample page fill the window. */
-      html,
+      /* html,
       body {
-        height: 100%;
-        margin: 0;
+        height: 90%;
+        margin: 1%;
         padding: 0;
-      }
+      } */
       
       .custom-map-control-button {
         background-color: #fff;

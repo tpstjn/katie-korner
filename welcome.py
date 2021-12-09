@@ -433,5 +433,5 @@ def manage():
 ####################
 @app.route("/map/")
 def map():
-    return render_template("geolocation.j2")
+    return render_template("geolocation.j2", user=current_user)
 # endregion
