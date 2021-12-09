@@ -1,16 +1,16 @@
 {% extends "base.j2" %}
-{% block title %}RateOurFlavors{% endblock %}
+{% block title %}Flavors{% endblock %}
 {% block active_flavor %}active{% endblock %}
 {% block main %}
-    <div class="table-responsive">
+<div>
+  <div class="table-responsive">
   <table class="table table-hover">
-  <caption>Flavors</caption>
     <thead class="thead-light">
       <tr>
         <th scope="col">Flavor</th>
         <th scope="col">Type</th>
         <th scope="col">Sugar Free</th>
-        {#<th scope="col">Rating</th>#}
+        <th scope="col">Average Rating</th>
         <th scope="col">Rate Me</th>
       </tr>
     </thead>
@@ -18,39 +18,50 @@
       {% if flavors %}
         {% for flavor in flavors %}
           <tr>
-            <td data-toggle="collapse" data-target="#accordion" class="clickable">{{flavor.flavor}}</td>
+            <td data-toggle="collapse" data-target="#{{flavor.flavor}}" class="clickable">{{flavor.flavor}}</td>
             {% if flavor.isSherbet %}
-                <td data-toggle="collapse" data-target="#accordion" class="clickable">Sherbet</td>
+                <td data-toggle="collapse" data-target="#{{flavor.flavor}}" class="clickable">Sherbet</td>
             {% else %}
-                <td data-toggle="collapse" data-target="#accordion" class="clickable">Ice cream</td>
+                <td data-toggle="collapse" data-target="#{{flavor.flavor}}" class="clickable">Ice cream</td>
             {% endif %}
             {% if flavor.isSugarFree %}
-                <td data-toggle="collapse" data-target="#accordion" class="clickable">Sugar Free</td>
+                <td data-toggle="collapse" data-target="#{{flavor.flavor}}" class="clickable">Sugar Free</td>
             {% else %}
-                <td data-toggle="collapse" data-target="#accordion" class="clickable">Contains Sugar</td>
+                <td data-toggle="collapse" data-target="#{{flavor.flavor}}" class="clickable">Contains Sugar</td>
             {% endif %}
-            {# {% for ranking in rankings %}
-                {% if flavor.flavor == ranking.flavor %}
-                    <td>{{f}}/5</td>
-                {% endif %}}
-            {% endfor %} #}
+            {% if avgRatings %}
+              {% if avgRatings.get(flavor.flavor) == "NA" %}
+                <td>NA</td>
+              {% else %}
+                <td>{{avgRatings.get(flavor.flavor)}}/5</td>
+              {% endif %}
+            {% endif %}
             <td>
               <button type="button" name="{{flavor.flavor}}" data-toggle="modal" data-target="#modalRate">Rate Me!</button>
             </td>
           </tr>
           {% if rankings %}
           <tr>
-                <td colspan="3">
-                    <div id="accordion" class="collapse">
-                        {% for ranking in rankings %} 
-                            {% if ranking.flavor == flavor.flavor %}
-                                <p>{{ranking.user}}</p>
-                                <p>{{ranking.rating}}/5</p>
-                                <p>{{ranking.comment}}</p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </td>
+              <td colspan="3">
+                  <div id="{{flavor.flavor}}" class="collapse">
+                    <table>
+                      <tr>
+                        <th>User</th>
+                        <th>Rating</th>
+                        <th>Comment</th>
+                      </tr>
+                      {% for ranking in rankings %} 
+                      <tr>
+                        {% if ranking.flavor == flavor.flavor %}
+                            <td>{{ranking.user}}</td>
+                            <td>{{ranking.rating}}/5</td>
+                            <td>{{ranking.comment}}</td>
+                        {% endif %}
+                      </tr>
+                      {% endfor %}
+                    </table>
+                  </div>
+              </td>
           </tr>
           {% endif %}
         {% endfor %}
@@ -59,5 +70,6 @@
       {% endif %}
     </tbody>
   </table>
+</div>
 {% include "/modal_rate.j2" %}
 {% endblock %}

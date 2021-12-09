@@ -380,9 +380,9 @@ def get_logout():
 #########
 # Flavors
 #########
-@app.get('/flavors/')
-def flavors():
-    return render_template('flavors.j2', user=current_user, flavorList=IceCreamFlavors.query.all())
+# @app.get('/flavors/')
+# def flavors():
+#     return render_template('flavors.j2', user=current_user, flavorList=IceCreamFlavors.query.all())
 
 # endregion
 
@@ -447,8 +447,8 @@ def manage():
 # Rate Our Flavors
 ##################
 
-@app.route('/rateflavor/', methods=['GET', 'POST'])
-def rateflavor():
+@app.route('/flavors/', methods=['GET', 'POST'])
+def flavors():
     form = RateFlavorForm()
     if request.method == 'POST':
         if form.validate():
@@ -457,7 +457,7 @@ def rateflavor():
             #       Needs to add existing flavor to database without having the
             #       user explicitly input it
             #
-            newRating = FlavorRating(flavor="Banana", rating=form.rating.data, comment=form.comment.data, user=current_user)
+            newRating = FlavorRating(flavor="Banana", rating=form.rating.data, comment=form.comment.data, user=current_user.email)
             db.session.add(newRating)
             db.session.commit()
 
@@ -465,11 +465,24 @@ def rateflavor():
             #db.session.add(newRating)
             #db.session.commit()
             flash('Flavor rated successfully', 'no-background-success')
-            return redirect(url_for('rateourflavors'))
+            return redirect(url_for('flavors'))
         else:
             for field, error in form.errors.items():
                 flash(f"{field}: {error}", 'error-rateflavor')
             # return redirect(url_for('register_employee'))
     flavorList = IceCreamFlavors.query.all()
     existingRankings = FlavorRating.query.all()
-    return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings)
+    
+    averageRankings = dict()
+    for flavor in flavorList:
+        count = 0
+        averageRankings[flavor.flavor] = 0
+        for ranking in FlavorRating.query.filter_by(flavor = flavor.flavor):
+            averageRankings[flavor.flavor] += ranking.rating
+            count += 1
+        if (count > 0):
+            averageRankings[flavor.flavor] = averageRankings.get(flavor.flavor) / count
+        else:
+            averageRankings[flavor.flavor] = "NA"
+        
+    return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings, avgRatings = averageRankings)
