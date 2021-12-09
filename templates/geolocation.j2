@@ -1,0 +1,21 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="/static/scripts/index.js"></script> 
+
+{% extends "base.j2" %}
+{% block title %}Geolocation{% endblock %}
+{% block active_geo %}active{% endblock %}
+{% block main %}
+
+
+    <div id="map"></div>
+    
+  <div id="get-location">
+    <input type="text" placeholder="Choose Location"> 
+    </div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7xrExENt85KsmZDEWrnghkUSSTb7rxqQ&callback=initMap&v=weekly"
+      async
+    ></script>
+{% endblock %}
