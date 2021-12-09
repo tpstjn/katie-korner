@@ -3,6 +3,10 @@
     color: black;
   }
 
+.clickable {
+    cursor: pointer;
+}
+
 #flavors{
     display: flex;
 }
@@ -36,13 +40,24 @@
     margin-left:8%;
     margin-right:8%;
     padding: 3%;
+    padding-top: 0%;
     padding-left: 2%;
     padding-right: 2%;
+}
 
+#register-meat {
+    margin-left:8%;
+    margin-right:8%;
+    padding: 3%;
+    padding-top: 0%;
+    padding-left: 2%;
+    padding-right: 2%;
+    align-items: center;
 }
 
 #HeaderIMG {
     display: inline-block;
+    vertical-align:text-bottom;
 }
 
 #submit {
@@ -62,8 +77,17 @@
 #HeaderTitle {
     display: inline-block;
     font-family: "Brush Script MT", cursive; 
+    color: #ef0e28;
     font-weight: 700; 
     font-size: 500%;
+}
+
+#HeaderSubtitle {
+    display: inline-block;
+    font-family: "Brush Script MT", cursive;
+    color: #14176d;
+    font-weight: 700; 
+    font-size: 300%;
 }
 
 .active {
@@ -73,12 +97,12 @@
 
 header {
     text-align: left;
-    background-color: #FFDFD3;
+    background-color: aliceblue;
 }
 
 body {
-    text-align: center;
-    background-image: url("/static/frontKatie.jpg");
+    /* text-align: center; */
+    /* background-image: url("/static/frontKatie.jpg"); */
     background-size: cover;
 }
 
@@ -89,7 +113,15 @@ body {
 
 footer {
     padding-bottom: 10rem;
-    background-image: url("/static/katieHomemade.png");
+    /* background-image: url("/static/katieHomemade.png"); */
     background-size: contain;
     margin-top: 40rem;
+}
+
+.messages {
+    background-color: #343a40;
+}
+
+#logout {
+    background-color: none;
 }

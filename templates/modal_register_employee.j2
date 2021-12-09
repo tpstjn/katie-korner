@@ -1,0 +1,101 @@
+<!-- Modal -->
+<div class="modal fade" id="modalRegisterEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register Employee</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row">
+              <div class="form-group col">
+                {{registerForm.hidden_tag()}}
+
+                <div>
+                  {{ registerForm.firstName.label(class="form-control-label") }}
+                  {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                  {{registerForm.firstName(class="form-control" + (" is-invalid" if registerForm.firstName.errors else ""))}}
+                  {% if registerForm.firstName.errors %}
+                    {% for error in registerForm.firstName.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ registerForm.lastName.label(class="form-control-label") }}
+                  {{registerForm.lastName(class="form-control" + (" is-invalid" if registerForm.lastName.errors else ""))}}
+                  {% if registerForm.lastName.errors %}
+                    {% for error in registerForm.lastName.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ registerForm.role.label(class="form-control-label") }}
+                  {{registerForm.role(class="form-control" + (" is-invalid" if registerForm.role.errors else ""))}}
+                  {% if registerForm.role.errors %}
+                    {% for error in registerForm.role.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="form-group col">
+                <div>
+                  {{ registerForm.email.label(class="form-control-label") }}
+                  {{registerForm.email(class="form-control" + (" is-invalid" if registerForm.email.errors else ""))}}
+                  {% if registerForm.email.errors %}
+                    {% for error in registerForm.email.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ registerForm.password.label(class="form-control-label") }}
+                  {{registerForm.password(class="form-control" + (" is-invalid" if registerForm.password.errors else ""))}}
+                  {% if registerForm.password.errors %}
+                    {% for error in registerForm.password.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ registerForm.confirm_password.label(class="form-control-label") }}
+                  {{registerForm.confirm_password(class="form-control" + (" is-invalid" if registerForm.confirm_password.errors else ""))}}
+                  {% if registerForm.confirm_password.errors %}
+                    {% for error in registerForm.confirm_password.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">
+                {{ registerForm.submitRegister() }}
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{# Make sure to keep modal up if there are errors preventing adding employee #}
+{% if registerForm.errors %}
+  <script>
+    $('#modalRegisterEmployee').modal('show');
+  </script>
+{% endif %}

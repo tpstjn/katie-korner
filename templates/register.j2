@@ -1,29 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/static/styles/registerStyleSheet.css">
-</head>
-<body>
-  <header>
-    <div class="container">
-      {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning d-flex align-items-center alert-dismissible fade show">
-          <button type="button" class="close" data-bs-dismiss="alert"> 
-            &times;
-          </button>
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-    <img id="HeaderIMG" src="/static/KatiesLogo.gif" width=64px height=64px/>
-    <h1 id="HeaderTitle" >Katies Korner</h1>
+{% extends "base.j2" %}
+{% block title %}Login{% endblock %}
+{% block active_login %}active{% endblock %}}
+{% block main %}
+  <div class = "row bg-dark text-white" id="register-meat">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+        <form id="formLogin" method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row justify-content-center">
+              <div class="form-group col">
+                {{form.hidden_tag()}}
+                <h3>Become a user!</h3>
+                <div>
+                  {{ form.email.label(class="form-control-label") }}
+                  {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                  {{form.email(class="form-control" + (" is-invalid" if form.email.errors else ""))}}
+                  {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              
+                <div>
+                  {{ form.password.label(class="form-control-label") }}
+                  {{form.password(class="form-control" + (" is-invalid" if form.password.errors else ""))}}
+                  {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
 
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="padding-left: 1rem;">
       <button type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar"
@@ -42,36 +50,26 @@
           <a class="nav-item nav-link" href="{{url_for('order_schedule')}}">Order Ahead</a>
           <div class="topnav-right">
             <a class="nav-item nav-link active" href="{{url_for('login')}}">Log in</a>
+                <div>
+                  {{ form.confirm_password.label(class="form-control-label") }}
+                  {{form.confirm_password(class="form-control" + (" is-invalid" if form.password.errors else ""))}}
+                  {% if form.confirm_password.errors %}
+                    {% for error in form.confirm_password.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                {{ form.submit() }}
+              </div>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
-    </nav>  </header>
-  <main>
-
-  <div class="row bg-dark text-white" id="register-meat">
-    <form method="POST">
-        {{form.hidden_tag()}}
-
-        <p class="display-6"> Become a user! </p>
-
-        <div class="register-fields">
-        {{form.email.label}}
-        {{form.email()}}
-        <br />
-        </div>
-        <div class="register-fields">
-        {{form.password.label}}
-        {{form.password()}}
-        <br />
-        </div>
-        <div class="register-fields">
-        {{form.confirm_password.label}}
-        {{form.confirm_password()}}
-        <br />
-        </div>
-        {{form.submit()}}
-    </form>
+      <div class="col-md-4">
+      </div>
     </div>
-  </main>
-</body>
-</html>
+{% endblock %}
