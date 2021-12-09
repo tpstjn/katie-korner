@@ -1,37 +1,63 @@
 {% extends "base.j2" %}
-{% block addToHeader %} <script src="scripts/rateourflavors.js"></script> {% endblock %}
 {% block title %}RateOurFlavors{% endblock %}
 {% block active_flavor %}active{% endblock %}
 {% block main %}
-    <h1>Flavors</h1>
-    <div class="container-fluid">
-        <!-- Example row of columns -->
-        <div class="row">
+    <div class="table-responsive">
+  <table class="table table-hover">
+  <caption>Flavors</caption>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Flavor</th>
+        <th scope="col">Type</th>
+        <th scope="col">Sugar Free</th>
+        {#<th scope="col">Rating</th>#}
+        <th scope="col">Rate Me</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if flavors %}
         {% for flavor in flavors %}
-          <div class="col-md-1">
-            <h5>{{flavor.flavor}}</h5>
+          <tr>
+            <td data-toggle="collapse" data-target="#accordion" class="clickable">{{flavor.flavor}}</td>
             {% if flavor.isSherbet %}
-                <p>Sherbet</p>
+                <td data-toggle="collapse" data-target="#accordion" class="clickable">Sherbet</td>
+            {% else %}
+                <td data-toggle="collapse" data-target="#accordion" class="clickable">Ice cream</td>
             {% endif %}
-            {% if flavor.hasSugar %}
-                <p>Sugar Free!</p>
+            {% if flavor.isSugarFree %}
+                <td data-toggle="collapse" data-target="#accordion" class="clickable">Sugar Free</td>
+            {% else %}
+                <td data-toggle="collapse" data-target="#accordion" class="clickable">Contains Sugar</td>
             {% endif %}
-            <p></p>
-            <input type="button" name="{{flavor.flavor}}" value="Ratings">
-          </div>
+            {# {% for ranking in rankings %}
+                {% if flavor.flavor == ranking.flavor %}
+                    <td>{{f}}/5</td>
+                {% endif %}}
+            {% endfor %} #}
+            <td>
+              <button type="button" name="{{flavor.flavor}}" data-toggle="modal" data-target="#modalRate">Rate Me!</button>
+            </td>
+          </tr>
+          {% if rankings %}
+          <tr>
+                <td colspan="3">
+                    <div id="accordion" class="collapse">
+                        {% for ranking in rankings %} 
+                            {% if ranking.flavor == flavor.flavor %}
+                                <p>{{ranking.user}}</p>
+                                <p>{{ranking.rating}}/5</p>
+                                <p>{{ranking.comment}}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+          </tr>
+          {% endif %}
         {% endfor %}
-        </div>
-    </div> <!-- /container -->
-    <form method="POST">
-        {{form.hidden_tag()}}
-        <br />
-        {{form.rating.label}}
-        {{form.rating()}}
-        <br />
-        {{form.comment.label}}
-        {{form.comment()}}
-        <br />
-        {{form.submit()}}
-        <br />
-    </form>
+      {% else %}
+        <td colspan="5">No flavors currently</td>
+      {% endif %}
+    </tbody>
+  </table>
+{% include "/modal_rate.j2" %}
 {% endblock %}

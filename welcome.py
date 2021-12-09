@@ -457,6 +457,9 @@ def rateflavor():
             #       Needs to add existing flavor to database without having the
             #       user explicitly input it
             #
+            newRating = FlavorRating(flavor="Banana", rating=form.rating.data, comment=form.comment.data, user=current_user)
+            db.session.add(newRating)
+            db.session.commit()
 
             #newRating = FlavorRating(rating=form.rating.data, comment=form.comment.data)
             #db.session.add(newRating)
