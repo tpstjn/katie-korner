@@ -1,10 +1,11 @@
 {% extends "base.j2" %}
 {% block title %}Schedule{% endblock %}
+{% block active_order %}active{% endblock %}
 {% block main %}
 <link rel="stylesheet" href="/static/styles/orderscheduleStyleSheet.css">
 <script src="/static/scripts/order_ahead.js"></script>
     <div class = "row bg-dark text-white" id="order-schedule-meat">
-      <div class="col-md-12">
+      <div class="col-lg-12">
 
       <form method="POST" id="order-schedule-form">
 
@@ -24,9 +25,9 @@
           </div>
           <div class="order-schedule-info">
             <br />
-                <input type="radio" id="ASAP-button" name="pickup-time" value="ASAP" onclick="hideCalendar();">
+                <input type="radio" id="ASAP-button" name="pickup-time" value="ASAP" onclick="hideCalendar();" required>
                 <label for="ASAP-button">ASAP || </label>
-                <input type="radio" id="later-button" name="pickup-time" value="Later" onclick="displayCalendar();">
+                <input type="radio" id="later-button" name="pickup-time" value="Later" onclick="displayCalendar();" required>
                 <label for="later-button">Later</label>
             <div id="calendar" style="display:none">
               {{form.dayPicker()}} {{form.timePicker()}}
