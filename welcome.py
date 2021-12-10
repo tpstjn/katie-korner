@@ -270,8 +270,8 @@ class FlavorRating(db.Model):
 # db.drop_all()
 db.create_all()  # this is only needed if the database doesn't already exist
 
-# Role.insert_roles()
-# IceCreamFlavors.insert_flavors()
+Role.insert_roles()
+IceCreamFlavors.insert_flavors()
 
 # endregion
 
