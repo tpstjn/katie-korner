@@ -55,7 +55,7 @@ function initMap() {
       );
 
   const beavKK = document.createElement("button");
-  beavKK.textContent = "Ohio Location";
+  beavKK.textContent = "Beaver Falls";
   beavKK.classList.add("custom-map-control-button");
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(beavKK);
   beavKK.addEventListener("click", () => {

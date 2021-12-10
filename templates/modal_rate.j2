@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade" id="modalRate" tabindex="-1" role="dialog" aria-labelledby="rate" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rate">
+
+        </h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="formRateFlavor" method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row">
+              <div class="form-group col">
+                {{form.hidden_tag()}}
+
+                <div>
+                  {{ form.rating.label(class="form-control-label") }}
+                  {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                  {{form.rating(class="form-control" + (" is-invalid" if form.rating.errors else ""))}}
+                  {% if form.rating.errors %}
+                    {% for error in form.rating.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+                <div>
+                  {{ form.comment.label(class="form-control-label") }}
+                  {{form.comment(class="form-control" + (" is-invalid" if form.comment.errors else ""))}}
+                  {% if form.comment.errors %}
+                    {% for error in form.comment.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+
+              </div> <!--form-group col-->
+            </div> <!--form-row-->
+            <div class="form-row">
+              <div class="col-md-4">
+                {{ form.submit() }}
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div> <!--form-row-->
+          </div> <!--container-->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{# Make sure to keep modal up if there are errors preventing adding employee #}
+{% if form.errors %}
+  <script>
+    $('#modalRate').modal('show');
+  </script>
+{% endif %}                

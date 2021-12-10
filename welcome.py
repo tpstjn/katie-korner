@@ -8,9 +8,8 @@
 # Imports
 #########
 import enum
-
-from sqlalchemy.orm import session
-from forms.login_forms import EditEmployeeForm, LoginForm, RegisterForm, RegisterEmployeeForm
+from forms.login_forms import LoginForm, RegisterForm, RegisterEmployeeForm
+from forms.rateflavor_forms import RateFlavorForm
 from security.hashing import UpdatedHasher
 import os
 import sys
@@ -255,6 +254,16 @@ class Employee(db.Model):
 # endregion 
 
 # endregion
+
+# regrion FlavorRating
+
+class FlavorRating(db.Model):
+    __tablename__ = 'FlavorRatings'
+    id = db.Column(db.Integer, primary_key=True)
+    flavor = db.Column(db.Unicode, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    comment = db.Column(db.Unicode, nullable=True)
+    user = db.Column(db.Unicode, nullable=False)
 
 # region ForDebug
 
@@ -511,63 +520,50 @@ def order_checkout():
 @app.route('/manage/', methods=['GET', 'POST'])
 @fresh_login_required
 def manage():
-    registerForm = RegisterEmployeeForm()
-    editForm = EditEmployeeForm()
+    form = RegisterEmployeeForm()
     roles = [Employee_Role.Cashier, Employee_Role.Kitchen, Employee_Role.Cleaner, Employee_Role.Manager, Employee_Role.Boss]
-    registerForm.role.choices = [(role.value, role.name) 
+    # flash(f"{roles}")
+    for role in roles:
+        flash(f"{role.name}")
+    form.role.choices = [(role.value, role.name) 
                                 for role in roles]
-    editForm.role.choices = registerForm.role.choices
+
+    # if request.method == 'GET':
+    #     return render_template('register_employee.j2', form=form, user=current_user)
 
     if request.method == 'POST':
-        # Edit employee attributes
-        if editForm.submitEdit.data:
-            id = request.args.get('id')
-            db.session.query(Employee).\
-                filter(Employee.id == id).\
-                update({"employee_role": (editForm.role.data)})
-            db.session.commit()
-            return redirect(url_for('manage'))
-        # Add new employee
-        if registerForm.submitRegister.data:
-            if registerForm.validate():
-                # Check if email & pwd are in DB
-                user = User.query.filter_by(email=registerForm.email.data).first()
-                # if the email address is free, create a new user and send to login
-                if user is None:
-                    #Add employee to Users Table
-                    user = User(email=registerForm.email.data,
-                                password=registerForm.password.data)
-                    db.session.add(user)
-                    db.session.commit()
-                    
-                    #Add employee to Employees Table
-                    employee = Employee(email=registerForm.email.data,
-                                        first_name=registerForm.firstName.data,
-                                        last_name=registerForm.lastName.data,
-                                        employee_role=registerForm.role.data)
-                    db.session.add(employee)
-                    db.session.commit()
+        if form.validate():
+            # Check if email & pwd are in DB
+            user = User.query.filter_by(email=form.email.data).first()
+            # if the email address is free, create a new user and send to login
+            if user is None:
+                #Add employee to Users Table
+                user = User(email=form.email.data,
+                            password=form.password.data)
+                db.session.add(user)
+                db.session.commit()
+                
+                #Add employee to Employees Table
+                employee = Employee(email=form.email.data,
+                                    first_name=form.firstName.data,
+                                    last_name=form.lastName.data,
+                                    employee_role=form.role.data)
+                db.session.add(employee)
+                db.session.commit()
 
-                    flash('Account created successfully', 'no-background-success')
-                    return redirect(url_for('manage'))
-                else:  # if user already exists
-                    # flash warning message and redirect
-                    flash('There is already an account with that email address', 'no-background-warning')
-                    return redirect(url_for('manage'))
-            else:
-                for field, error in registerForm.errors.items():
-                    flash(f"{field}: {error}", 'error-employee')
+                flash('Account created successfully', 'no-background-success')
+                return redirect(url_for('manage'))
+            else:  # if user already exists
+                # flash warning message and redirect
+                flash('There is already an account with that email address', 'no-background-warning')
+                # return redirect(url_for('register_employee'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}", 'error-employee')
+            # return redirect(url_for('register_employee'))
+    return render_template("manage.j2", user=current_user, form=form)
 
-    employees = Employee.query.all()
-    return render_template("manage.j2", user=current_user, registerForm=registerForm, editForm=editForm, 
-                            employees=employees, roles=roles)
-
-@app.route('/removeEmployee/<int:id>/', methods=['GET', 'DELETE'])
-def removeEmployee(id):
-    # Remove employee from database
-    Employee.query.filter_by(id=id).delete()
-    db.session.commit()
-    return(redirect(url_for('manage')))
+# endregion
 
 # endregion
 
@@ -579,3 +575,46 @@ def removeEmployee(id):
 def map():
     return render_template("geolocation.j2", user=current_user)
 # endregion
+=======
+# region RateFlavors
+
+##################
+# Rate Our Flavors
+##################
+
+@app.route('/flavors/', methods=['GET', 'POST'])
+def flavors():
+    form = RateFlavorForm()
+
+    if request.method == 'POST':
+        if form.validate():
+            curFlavor = request.args.get('flavor')
+            newRating = FlavorRating(flavor=curFlavor, rating=form.rating.data, comment=form.comment.data, user=current_user.email)
+            db.session.add(newRating)
+            db.session.commit()
+
+            #newRating = FlavorRating(rating=form.rating.data, comment=form.comment.data)
+            #db.session.add(newRating)
+            #db.session.commit()
+            flash('Flavor rated successfully', 'no-background-success')
+            return redirect(url_for('flavors'))
+        else:
+            for field, error in form.errors.items():
+                flash(f"{field}: {error}", 'error-rateflavor')
+            # return redirect(url_for('register_employee'))
+    flavorList = IceCreamFlavors.query.all()
+    existingRankings = FlavorRating.query.all()
+    
+    averageRankings = dict()
+    for flavor in flavorList:
+        count = 0
+        averageRankings[flavor.flavor] = 0
+        for ranking in FlavorRating.query.filter_by(flavor = flavor.flavor):
+            averageRankings[flavor.flavor] += ranking.rating
+            count += 1
+        if (count > 0):
+            averageRankings[flavor.flavor] = averageRankings.get(flavor.flavor) / count
+        else:
+            averageRankings[flavor.flavor] = "NA"
+
+    return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings, avgRatings = averageRankings)
