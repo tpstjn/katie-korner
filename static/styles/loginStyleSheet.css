@@ -3,6 +3,30 @@
     color: black;
   }
 
+footer {
+    margin-top:5rem;
+    padding-bottom: 10rem;
+    background-color:#14176d;
+    font-family: "Brush Script MT", cursve;
+    color:white;
+    padding:2rem;
+    text-align: center;
+    height: 10rem;
+}
+.footer-rows {
+    text-align: center;
+    display:flex;
+}
+
+.footer-container {
+    text-align: center;
+}
+
+body,html {
+    height: 100%;
+    width:100%;
+}
+
 .clickable {
     cursor: pointer;
 }
@@ -94,30 +118,83 @@
     vertical-align: top;
 }
 
-#img-ribbon-1 {
+.img-ribbon {
     width:24%;
     margin:0%;
 
 }
 
-#img-ribbon-2 {
-    width:24%;
-    padding:0%;
-
-
+#center-image-home {
+    padding:3rem;
 }
 
-#img-ribbon-3 {
-    width:24%;
+
+#history-left {
+    padding-top:3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: right;
 }
 
-#img-ribbon-4 {
-    width:24%;
+#history-right {
+    padding-top:3rem;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: left;
 }
+
+#history-container {
+    margin:auto;
+    padding:none;
+    display: flex;
+    text-align: center;
+}
+
+#history-home {
+    margin:none;
+    padding:none;
+    text-align: center;
+}
+
+#homePageLogin {
+    margin-top: 2%;
+}
+
+.arrow-left {
+    float:left;
+}
+
+.arrow-right {
+    float:right;
+}
+
+.login-button {
+    margin:3%;
+    margin-left:4%;
+    display: inline-block;
+    padding: 20px 25px;
+    font-size: 3rem;
+    font-family:"Brush Script MT",cursive;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #14176d;
+    border: none;
+    border-radius: 15px;
+  }
+  
+  .login-button:hover {background-color: #14176d}
+  
+  .login-b:active {
+    background-color: #14176d;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
 
 /* Order Ahead Button */
 
 .order-ahead {
+    margin:1%;
     display: inline-block;
     padding: 20px 25px;
     font-size: 3rem;
@@ -177,12 +254,6 @@ body {
 .navbar-custom {
     text-decoration-color: black;
     background-color: #FEC8D8;
-}
-
-footer {
-    padding-bottom: 10rem;
-    background-size: contain;
-    margin-top: 40rem;
 }
 
 .messages {
