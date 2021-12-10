@@ -398,22 +398,6 @@ def get_logout():
 
 # endregion
 
-# region Flavors
-
-#########
-# Flavors
-#########
-@app.get('/flavors/')
-def flavors():
-    # flavorList = IceCreamFlavors.query.all()
-    # flavorMessage = ""
-    # for flavor in flavorList:
-    #     flavorMessage += f"{flavor.flavor} : {flavor.isRegularFlavor} : {flavor.isSherbet} : {flavor.hasSugar}\n"
-    # flash(flavorMessage)
-    return render_template('flavors.j2', user=current_user, flavorList=IceCreamFlavors.query.all())
-
-# endregion
-
 # region ORDER AHEAD
 #############
 # Order Ahead
@@ -422,7 +406,7 @@ def flavors():
 def order_schedule():
     form = SchedulePickupForm()
     if request.method == 'GET':
-        return render_template("order_schedule.j2", form=form)
+        return render_template("order_schedule.j2", form=form, user=current_user)
     elif request.method == 'POST':
         if form.validate():
             if form.goBackBut.data:
@@ -446,7 +430,7 @@ def order_menu():
     milkshakeForm.flavor.choices = flavor_names
     coneForm.flavor.choices = flavor_names
     if request.method == "GET":
-        return render_template("order_menu.j2", pintForm=pintForm, milkshakeForm=milkshakeForm, coneForm=coneForm)
+        return render_template("order_menu.j2", user=current_user, pintForm=pintForm, milkshakeForm=milkshakeForm, coneForm=coneForm)
     elif request.method == "POST":
         if pintForm.submitOrderPint.data:
             if pintForm.validate():
