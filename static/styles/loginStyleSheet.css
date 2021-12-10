@@ -263,3 +263,37 @@ body {
 #logout {
     background-color: none;
 }
+
+.CommentBlock {
+    background-color: #343a40;
+}
+
+.Commenter {
+    background-color: #FFDFD3;
+    padding: .25rem;
+    padding-left: 1rem;
+}
+
+.Ranking {
+    background-color: #5c63699d;
+    color: rgb(180, 180, 180);
+    padding: .25rem;
+    padding-left: 1rem;
+}
+
+.Comment {
+    word-wrap: break-word;
+    width: 1240px;
+    background-color: #5c63699d;
+    color: rgb(180, 180, 180);
+    padding: .75rem;
+    padding-left: 1rem;
+}
+
+.FlavorRow {
+    background-color: rgb(246, 253, 255);
+}
+
+#FlavorPageBody {
+    background-color: white;
+}
