@@ -23,6 +23,9 @@ from enum import Flag, auto
 script_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(script_dir)
 
+from security.hashing import UpdatedHasher
+from forms.login_forms import LoginForm, RegisterForm
+from forms.order_forms import SchedulePickupForm
 # endregion
 
 # region Basic Config
@@ -205,7 +208,7 @@ class IceCreamFlavors(db.Model):
     isRegularFlavor = db.Column(db.Boolean, nullable=False)
     isSherbet = db.Column(db.Boolean, nullable=False)
     hasSugar = db.Column(db.Boolean, nullable=False)
-
+    
     @staticmethod
     def insert_flavors():
         flavors = (
@@ -295,7 +298,6 @@ def index():
 # Login
 #######
 
-
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -338,7 +340,7 @@ def login():
 def register():
     form = RegisterForm()
     if request.method == 'GET':
-        return render_template('register.j2', form=form)
+        return render_template('register.j2', form=form, user=current_user)
     if request.method == 'POST':
         if form.validate():
             # Check if email & pwd are in DB

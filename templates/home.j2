@@ -1,3 +1,46 @@
 {% extends "base.j2" %}
 {% block title %}Home{% endblock %}
-{% block active_home %}active{% endblock %}
+{% block active_home %}active{% endblock %}}
+
+{% block main%}
+    <div id='img-ribbon-home' class='row-xs row-no-gutters'>
+        <img src = '/static/boy-with-cone.jpg' class='col-xs-3 img-fluid img-ribbon'/>
+        <img src = '/static/ice-cream-four-ofem.jpg' class='col-xs-3 img-fluid img-ribbon'/>
+        <img src = '/static/dog-ice-cream.jpg' class='col-xs-3 img-fluid img-ribbon'/>
+        <img src = '/static/ice-cream-large.jpg' class='col-xs-3 img-fluid img-ribbon'/>
+    </div>
+
+    <div id="button-container">
+        <a href="/map/" class="btn btn-primary order-ahead">Order Ahead</a>
+    </div>
+
+    <div class="row-xs no-gutters" id="homePageLogin">
+        <img src = '/static/arrow-left.png' class='col-md-4 img-fluid arrow-left'/>
+        <a href = "/login/" class='btn col-md-3 login-button'>Login!</a>
+        <img src = '/static/arrow-right.png' class='col-md-4 img-fluid arrow-right'/>
+    </div>
+
+    <div class="container" id="history-container">
+        <div class="row no-gutters" id="history-home"> 
+            <div class="col-4" id="history-left"> 
+                Katherine Martin and her family started Katie’s Korner in 1983. Since the beginning, 
+                our focus has been on making and marketing a high quality gourmet ice cream. Our first 
+                location, located in a century old house, was the site of manufacturing and retail sales. 
+                In 1987 we opened a second store in Canfield, Ohio, which later became our first franchise. 
+                Unable to fulfill the requests for products, we expanded again in 1990 with the opening of 
+                a retail store and manufacturing plant in Hubbard, Ohio. This facility can manufacture our 
+                own specially formulated ice cream mix, as well as a variety of ice creams, sherbets, sorbets, 
+                and ice cream pies.
+            </div>
+                <img class = "col-4 img-fluid" id="center-image-home" src='/static/ice-cream-chicken.jpg' />
+            <div class="col-4" id="history-right"> 
+                <p>We are not a major corporation, but a niche supplier of gourmet ice cream. We make our products 
+                - not just market them. Each product is hand-crafted in our plant to assure consistent quality. Our 
+                growth to date has been driven by our products, not by advertising. Currently we produce and distribute 
+                over 70 flavors to our retail locations and commercial accounts. Our customers include the prestigious, 
+                award winning five star resort, The Greenbrier, located in West Virginia. </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

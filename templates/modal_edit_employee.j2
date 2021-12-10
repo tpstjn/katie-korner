@@ -1,0 +1,60 @@
+<!-- Modal -->
+<div class="modal fade" id="modalEditEmployee" tabindex="-1" role="dialog" aria-labelledby="editEmployee" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editEmployee">Edit Employee</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditEmployee" method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row">
+              <div class="form-group col">
+                {{editForm.hidden_tag()}}
+
+                <div>
+                  {{ editForm.name.label(class="form-control-label") }}
+                  {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                  {{editForm.name(class="form-control" + (" is-invalid" if editForm.name.errors else ""))}}
+                  {% if editForm.name.errors %}
+                    {% for error in editForm.name.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              <div class="form-group col">
+                <div>
+                  {{ editForm.role.label(class="form-control-label") }}
+                  {{editForm.role(class="form-control" + (" is-invalid" if editForm.role.errors else ""))}}
+                  {% if editForm.role.errors %}
+                    {% for error in editForm.role.errors %}
+                      <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                {{ editForm.submitEdit() }}
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{# Make sure to keep modal up if there are errors preventing adding employee #}
+{% if editForm.errors %}
+  <script>
+    $('#modalEditEmployee').modal('show');
+  </script>
+{% endif %}

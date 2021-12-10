@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.form import SUBMIT_METHODS
 from wtforms.fields import PasswordField, SubmitField
 from wtforms.fields.core import BooleanField, SelectField
 from wtforms.fields.html5 import EmailField
@@ -35,11 +36,23 @@ class RegisterEmployeeForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password", 
         validators=[EqualTo('password', message="Passwords must match")],
         render_kw={"placeholder": "Confirm Password"})
-    submit = SubmitField("Register")
+    submitRegister = SubmitField("Register")
 
 class LoginForm(FlaskForm):
-    email = EmailField("Email: ", validators=[InputRequired(), Email()])
+    email = EmailField("Email: ", 
+        validators=[InputRequired(message="Required"), 
+        Email(message="Must be a valid email address")])
     password = PasswordField("Password: ", 
-        validators=[InputRequired(), Length(min=8, max=256)])
+        validators=[InputRequired(message="Required"), 
+        Length(min=8, max=256)])
     rememberMe = BooleanField("Remember me")
     submit = SubmitField("Login")
+
+class EditEmployeeForm(FlaskForm):
+    name = TextField("Name",
+        render_kw={"disabled": "True"})
+    role = SelectField("Role", 
+        validators=[InputRequired(message="Required")],
+        choices=[],
+        render_kw={"placeholder": "Role"})
+    submitEdit = SubmitField("Make Changes")
