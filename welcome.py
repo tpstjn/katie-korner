@@ -26,7 +26,7 @@ sys.path.append(script_dir)
 
 from security.hashing import UpdatedHasher
 from forms.login_forms import LoginForm, RegisterForm
-from forms.order_forms import SchedulePickupForm
+from forms.order_forms import OrderPint, OrderMilkshake, OrderCone, OrderSundae, SchedulePickupForm
 # endregion
 
 # region Basic Config
@@ -266,6 +266,29 @@ db.create_all()  # this is only needed if the database doesn't already exist
 
 # endregion
 
+# region Classes
+
+class PintOrder:
+    def __init__(self, flavor, quantity):
+        self.flavor = flavor
+        self.quantity = quantity
+
+class MilkshakeOrder:
+    def __init__(self, flavor, quantity, addWhippedCream, addCherry):
+        self.flavor = flavor
+        self.quantity = quantity
+        self.addWhippedCream = addWhippedCream
+        self.addCherry = addCherry
+
+class ConeOrder:
+    def __init__(self, flavor, quantity, coneType, numOfScoops):
+        self.flavor = flavor
+        self.quantity = quantity
+        self.coneType = coneType
+        self.numOfScoops = numOfScoops
+
+# endregion
+
 # region Route Handlers
 
 ################
@@ -382,7 +405,9 @@ def flavors():
     # flash(flavorMessage)
     return render_template('flavors.j2', user=current_user, flavorList=IceCreamFlavors.query.all())
 
+# endregion
 
+# region ORDER AHEAD
 #############
 # Order Ahead
 #############
@@ -398,16 +423,84 @@ def order_schedule():
             elif form.continueBut.data:
                 return redirect(url_for('order_menu'))
         else:
-            for field, error in form.errors.items():
-                flash(f"{field}: {error}")
+            flash("Invalid Scheduling Information")
             return redirect(url_for('order_schedule'))
 
-
-@app.route('/order/menu/')
+order = list()
+@app.route('/order/menu/', methods=["GET", "POST"])
 def order_menu():
     #TODO some validation to make sure they've entered in valid data for pickup, and not just routing themselves to the menu
-    return "heeho"
-    
+    pintForm = OrderPint()
+    milkshakeForm = OrderMilkshake()
+    coneForm = OrderCone()
+    flavors = IceCreamFlavors.query.all()
+    flavor_names = [flavor.flavor for flavor in flavors]
+    pintForm.flavor.choices = flavor_names
+    milkshakeForm.flavor.choices = flavor_names
+    coneForm.flavor.choices = flavor_names
+    if request.method == "GET":
+        return render_template("order_menu.j2", pintForm=pintForm, milkshakeForm=milkshakeForm, coneForm=coneForm)
+    elif request.method == "POST":
+        if pintForm.submitOrderPint.data:
+            if pintForm.validate():
+                inList = False
+                for item in order:
+                    if item.flavor == pintForm.flavor.data:
+                        item.quantity += pintForm.quantity.data
+                        inList = True
+                if not inList:
+                    order.append(PintOrder(pintForm.flavor.data, pintForm.quantity.data))
+                for item in order:
+                    if isinstance(item, PintOrder):
+                        print(f"{item.flavor}: {item.quantity}", file=sys.stderr)
+                return redirect(url_for('order_menu'))       
+            else:
+                for field, error in pintForm.errors.items():
+                    flash(f"{field}: {error}")
+                return redirect(url_for('order_menu'))
+        elif milkshakeForm.submitOrderMilkshake.data:
+            inList = False
+            for item in order:
+                if item.flavor == milkshakeForm.flavor.data:
+                    item.quantity += milkshakeForm.quantity.data
+                    inList = True
+                if not inList:
+                    order.append(MilkshakeOrder(milkshakeForm.flavor.data, milkshakeForm.quantity.data, milkshakeForm.addWhippedCream.data, milkshakeForm.addCherry.data))
+                for item in order:
+                    if isinstance(item, MilkshakeOrder):
+                        print(f"{item.flavor}: {item.quantity}, WC:{item.addWhippedCream}, C:{item.addCherry}", file=sys.stderr)
+                return redirect(url_for('order_menu'))
+            else:
+                for field, error in milkshakeForm.errors.items():
+                    flash(f"{field}: {error}")
+                return redirect(url_for('order_menu'))
+        elif coneForm.submitOrderCone.data:
+            inList = False
+            for item in order:
+                if item.flavor == coneForm.flavor.data:
+                    item.quantity += coneForm.quantity.data
+                    inList = True
+                if not inList:
+                    order.append(ConeOrder(coneForm.flavor.data, coneForm.quantity.data, coneForm.coneType.data, coneForm.numOfScoops.data))
+                for item in order:
+                    if isinstance(item, ConeOrder):
+                        print(f"{item.flavor}: {item.quantity}, {item.coneType}, {item.numOfScoops}", file=sys.stderr)
+                return redirect(url_for('order_menu'))
+            else:
+                for field, error in coneForm.errors.items():
+                    flash(f"{field}: {error}")
+                return redirect(url_for('order_menu'))
+        if request.form['submit_button'] == 'Checkout':
+            # Clear out list to free it up for the next order
+            return redirect(url_for("order_checkout"))
+
+@app.route('/order/checkout')
+def order_checkout():
+    checkout_order = list(order)
+    order.clear()
+    return render_template("checkout.j2", user=current_user, order=checkout_order)
+# endregion
+
 # endregion
 
 # region Admin
@@ -478,6 +571,7 @@ def removeEmployee(id):
 
 # endregion
 
+# region Geolocation
 ####################
 # GEOLOCATION ROUTE 
 ####################

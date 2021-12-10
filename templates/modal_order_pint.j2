@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div class="modal fade" id="modalOrderPint" tabindex="-1" role="dialog" aria-labelledby="orderPint" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderPint">Pint</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row">
+              <div class="form-group col">
+                    {{pintForm.hidden_tag()}}
+
+                    <div>
+                        {{ pintForm.flavor.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{pintForm.flavor(class="form-control" + (" is-invalid" if pintForm.flavor.errors else ""))}}
+                        {% if pintForm.flavor.errors %}
+                            {% for error in pintForm.flavor.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <div>
+                        {{ pintForm.quantity.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{pintForm.quantity(class="form-control" + (" is-invalid" if pintForm.quantity.errors else ""))}}
+                        {% if pintForm.quantity.errors %}
+                            {% for error in pintForm.quantity.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                {{pintForm.submitOrderPint()}}
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{# Make sure to keep modal up if there are errors preventing adding employee #}
+{# {% if registerForm.errors %}
+  <script>
+    $('#modalRegisterEmployee').modal('show');
+  </script>
+{% endif %} #}
