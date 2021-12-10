@@ -334,8 +334,6 @@ def login():
 ###################
 # Register Customer
 ###################
-
-
 @app.route("/register/", methods=["GET", "POST"])
 def register():
     form = RegisterForm()
@@ -441,8 +439,6 @@ def manage():
 
 # endregion
 
-# endregion
-
 # region RateFlavors
 
 ##################
@@ -485,3 +481,18 @@ def flavors():
             averageRankings[flavor.flavor] = "NA"
 
     return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings, avgRatings = averageRankings)
+
+# endregion
+
+# region Geolocation
+
+####################
+# GEOLOCATION ROUTE 
+####################
+@app.route("/map/")
+def map():
+    return render_template("geolocation.j2", user=current_user)
+    
+# endregion
+
+# endregion
