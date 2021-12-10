@@ -1,0 +1,16 @@
+{% extends "base.j2" %}
+{% block title %}Checkout{% endblock %}
+{% block main %}
+    <table>
+        <tr>
+            <th>Flavor</th>
+            <th>Quantity</th>
+        </tr>
+        {% for item in order %}
+        <tr>
+            <td>{{item.flavor}}</td>
+            <td>{{item.quantity}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

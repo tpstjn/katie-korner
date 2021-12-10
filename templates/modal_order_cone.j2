@@ -1,0 +1,85 @@
+<!-- Modal -->
+<div class="modal fade" id="modalOrderCone" tabindex="-1" role="dialog" aria-labelledby="orderCone" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderCone">Cone</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" role="form" novalidate>
+          <div class="container">
+            <div class = "form-row">
+              <div class="form-group col">
+                    {{coneForm.hidden_tag()}}
+                    <div>
+                        {{ coneForm.flavor.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{coneForm.flavor(class="form-control" + (" is-invalid" if coneForm.flavor.errors else ""))}}
+                        {% if coneForm.flavor.errors %}
+                            {% for error in coneForm.flavor.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <div>
+                        {{ coneForm.quantity.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{coneForm.quantity(class="form-control" + (" is-invalid" if coneForm.quantity.errors else ""))}}
+                        {% if coneForm.quantity.errors %}
+                            {% for error in coneForm.quantity.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <div>
+                        {{ coneForm.coneType.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{coneForm.coneType(class="form-control" + (" is-invalid" if coneForm.coneType.errors else ""))}}
+                        {% if coneForm.coneType.errors %}
+                            {% for error in coneForm.coneType.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <div>
+                        {{ coneForm.numOfScoops.label(class="form-control-label") }}
+                        {# Adds "is-invalid" bootstrap styling to field if the field has errors #}
+                        {{coneForm.numOfScoops(class="form-control" + (" is-invalid" if coneForm.numOfScoops.errors else ""))}}
+                        {% if coneForm.numOfScoops.errors %}
+                            {% for error in coneForm.numOfScoops.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-4">
+                {{coneForm.submitOrderCone()}}
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{# Make sure to keep modal up if there are errors preventing adding employee #}
+{# {% if registerForm.errors %}
+  <script>
+    $('#modalRegisterEmployee').modal('show');
+  </script>
+{% endif %} #}

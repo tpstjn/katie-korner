@@ -1,0 +1,98 @@
+{% extends "base.j2" %}
+{% block title %}Schedule{% endblock %}
+{% block main %}
+<link rel="stylesheet" href="/static/styles/orderscheduleStyleSheet.css">
+<script src="/static/scripts/order_ahead.js"></script>
+    {# <div class = "row bg-dark text-white" id="order-menu-meat">
+      <div class="col-lg-12" role="button" data-toggle="modal" data-target="#modalOrderPint">
+        <div class="meta">
+          <div class="title">
+            <p>Pints</p>
+          </div>
+          <div class="description">
+            <p>HAND PACKED... Choose your favorite from our flavors!</p>
+            <p>$4.75</p>
+          </div>
+        </div>
+        <img class="order-image" src="/static/katiespint.jpeg" />
+      </div>
+    </div> #}
+<div id="order-menu-meat">
+  <div class="table-responsive">
+    <table class="table table-hover" id="fixed-height">
+      <tbody>
+        <div class="col-lg-6">
+          <tr class="meta clickable col-lg-6" data-toggle="modal" data-target="#modalOrderPint">
+            <td>
+              <div class="title">
+                <p>Pints</p>
+              </div>
+              <div class="description">
+                <p>HAND PACKED... Choose your favorite from our flavors!</p>
+                <p>$4.75</p>
+              </div>
+            </td>
+            <td>
+              <img class="order-image" src="/static/katiespint.jpeg" />
+            </td>
+          </tr>
+          <tr class="meta clickable" data-toggle="modal" data-target="#modalOrderCone">
+            <td>
+              <div class="title">
+                <p>Cones</p>
+              </div>
+              <div class="description">
+                <p>Choose your favorite from our flavors</p>
+                <p>$2.75</p>
+              </div>
+            </td>
+            <td>
+              <img class="order-image" src="/static/icecreamcone.jpg" />
+            </td>
+          </tr>
+          <tr class="meta clickable" data-toggle="modal" data-target="#modalOrderMilkshake">
+            <td>
+              <div class="title">
+                <p>Milkshake</p>
+              </div>
+              <div class="description">
+                <p>Shake it up with some liquid deliciousness</p>
+                <p>$4.25</p>
+              </div>
+            </td>
+            <td>
+              <img class="order-image" src="/static/coffeemilkshake.png" />
+            </td>
+          </tr>
+          <tr class="meta clickable" data-toggle="modal" data-target="#modalOrderSundae">
+            <td>
+              <div class="title">
+                <p>Sundaes</p>
+              </div>
+              <div class="description">
+                <p>Choose one of our specialty sundaes!</p>
+                <p>$4.25</p>
+              </div>
+            </td>
+            <td>
+              <img class="order-image" src="/static/icecreamcone.jpg" />
+            </td>
+          </tr>
+        </div>
+      </tbody>
+    </table>
+  </div>
+  {# <form method="POST">
+    <input type="submit" class="btn btn-primary" name="submit_button" value="Checkout">
+  </form> #}
+</div>
+<form method="POST">
+  <div class="col-lg-12">
+    <input type="submit" class="btn btn-primary" name="submit_button" value="Checkout">
+  </div>
+</form>
+
+{% include "/modal_order_pint.j2"%}
+{% include "/modal_order_milkshake.j2"%}
+{% include "/modal_order_cone.j2"%}
+{% endblock %}

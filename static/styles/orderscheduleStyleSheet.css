@@ -5,3 +5,79 @@
     padding-left: 2%;
     padding-right: 2%;
 }
+
+#order-menu-meat {
+    margin-left:8%;
+    margin-right:8%;
+    padding: 3%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+/*
+#item-button {
+     background-image: url("/static/katiespint.jpeg");
+     background-size: 50px 50px;
+     height: 50px;
+     width: 100px;
+} */
+
+#item-button-left {
+    display: block;
+    height: 200px;
+    padding: 10;
+    margin: 0;
+    width: 400px;
+    border-radius: 8px;
+    font-size: 30px;
+    transition-duration: 0.4s;
+    position:relative;
+    text-align: left;
+}
+
+#item-button-text-title {
+    font-size:12px;
+    text-transform: capitalize;
+}
+
+#item-button-img-pint {
+    float: right;
+    position:relative;
+    display: inline;
+    height: 195px;
+    width: 195px;
+    display: block;
+    margin:0 auto;
+    background-image:url("/static/katiespint.jpeg");
+}
+
+.order-image {
+    float:right;
+    height: 120px;
+    width: 120px;
+}
+
+.meta {
+    background-color: white;
+    color: black;
+    float:left;
+    padding:1em;
+}
+
+.clickable {
+    cursor:pointer;
+}
+
+.title {
+    font-weight: bold;
+}
+
+#fixed-height {
+    table-layout: fixed;
+}
+
+#fixed-height tr {
+    height: 202px;
+    width: 470px;
+    overflow:hidden;
+}
