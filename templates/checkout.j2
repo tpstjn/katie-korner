@@ -7,10 +7,30 @@
             <th>Quantity</th>
         </tr>
         {% for item in order %}
-        <tr>
-            <td>{{item.flavor}}</td>
-            <td>{{item.quantity}}</td>
-        </tr>
+            {% if item.addCherry %}
+                <tr>
+                    <td>{{item.flavor}}</td>
+                    <td>{{item.quantity}}</td>
+                    {% if item.addCherry %}
+                        <td>With cherry</td>
+                    {% endif %}
+                    {% if item.addWhippedCream %}
+                        <td>With whipped cream</td>
+                    {% endif %}
+                </tr>
+            {% elif item.coneType %}
+                <tr>
+                    <td>{{item.flavor}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.coneType}}</td>
+                    <td>{{item.numOfScoops}}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{item.flavor}}</td>
+                    <td>{{item.quantity}}</td>
+                </tr>
+            {% endif %}
         {% endfor %}
     </table>
 {% endblock %}
