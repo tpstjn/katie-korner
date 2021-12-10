@@ -20,6 +20,10 @@ from flask_login import UserMixin, LoginManager, AnonymousUserMixin, login_manag
 from flask_login import login_user, logout_user, current_user
 from enum import Flag, auto
 
+# Attempted to get CORS to work
+# from flask_cors import CORS, cross_origin
+
+
 script_dir = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(script_dir)
 
@@ -52,6 +56,8 @@ app.config['SECRET_KEY'] = 'folgawoogaimogawomp'
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{dbfile}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['KATIES_ADMIN'] = 'tpstjn@gmail.com'
+# cors = CORS(app,resources={r"/api/*": {"origins": "*"}})
+# app.config['CORS_HEADERS'] = 'GET'
 
 # Get database object
 db = SQLAlchemy(app)
@@ -590,6 +596,19 @@ def flavors():
 
     return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings, avgRatings = averageRankings)
 
+
+# Attempt to dynamically load comments
+# def serialize(self):
+#         return {
+#             "comment": self.comment
+#         }
+
+
+# @app.get("/api/comments/<string:flavor>")
+# @cross_origin()
+# def get_comments(flavor):
+#     existingRankings = FlavorRating.query.filter_by(flavor=flavor)
+#     return serialize(existingRankings)
 # endregion
 
 # region Geolocation
