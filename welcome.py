@@ -450,14 +450,11 @@ def manage():
 @app.route('/flavors/', methods=['GET', 'POST'])
 def flavors():
     form = RateFlavorForm()
+
     if request.method == 'POST':
         if form.validate():
-            # TODO: Find a way to add a new flavor rating smoothly
-            #       Maybe make a new rate flavor page and rate from there?
-            #       Needs to add existing flavor to database without having the
-            #       user explicitly input it
-            #
-            newRating = FlavorRating(flavor="Banana", rating=form.rating.data, comment=form.comment.data, user=current_user.email)
+            curFlavor = request.args.get('flavor')
+            newRating = FlavorRating(flavor=curFlavor, rating=form.rating.data, comment=form.comment.data, user=current_user.email)
             db.session.add(newRating)
             db.session.commit()
 
@@ -484,5 +481,5 @@ def flavors():
             averageRankings[flavor.flavor] = averageRankings.get(flavor.flavor) / count
         else:
             averageRankings[flavor.flavor] = "NA"
-        
+
     return render_template("rateflavor.j2", user=current_user, form=form, flavors=flavorList, rankings=existingRankings, avgRatings = averageRankings)
